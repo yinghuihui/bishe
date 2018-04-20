@@ -124,6 +124,7 @@ public class LoginController extends BaseController{
 //				password.toUpperCase(), code, "", "","",
 //				"", "pc", "","pc");
 		request.getSession().setAttribute("user", "yinghh");
+		request.getSession().setAttribute("isborrow", 0);
 		result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 		result.put(Constant.RESPONSE_CODE_MSG, "登录成功!");
 		ServletUtils.writeToResponse(response,result);

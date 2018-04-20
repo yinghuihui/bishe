@@ -62,7 +62,7 @@
     padding-top: 60px;
 }
  dl dd{
-    padding-left:300px;
+    padding-left:200px;
     font-size:14px;
     height:60px;
     line-height:60px;
@@ -142,7 +142,7 @@ dl dd #obverse_pic{
    height: 133px;
 }
  dl dd.id_no_pic{
-    padding-left:300px;
+    padding-left:200px;
     font-size:14px;
     height:133px;
     line-height:133px;
