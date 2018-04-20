@@ -1,0 +1,302 @@
+body{
+    background:#F4F6F8;
+}
+#logintop{
+    background:#FFF;;
+}
+.main{
+    width:100%;
+    min-weight:1200px;
+    height:660px;
+    background:#F4F6F8;
+}
+.main .change{
+    width:1180px;
+    height:600px;
+    background: #fff;
+    margin:30px auto;
+}
+.change ul {
+    height:80px;
+    width:1180px;
+    border-bottom:2px solid #EAEAEA;
+    overflow:hidden;
+}
+.change ul li{
+    float:left;
+    height:80px;
+    line-height:80px;
+    padding-left:30px;
+    width:150px;
+    margin-left:100px;
+}
+.change ul li.hover{
+    height:77px;
+    line-height:77px;
+    border-bottom:5px solid #DB2B1D;
+}
+.change ul li b{
+    display:inline-block;
+     line-height:20px;
+     text-align: center;
+     font-size:14px;
+     font-weight: normal;
+     margin-right:5px;
+     color:#ccc;
+    width:20px;
+    height:20px;
+    border:1px solid #EDEDED;
+    border-radius: 50%;
+}
+.changRed{
+    color: red!important;
+}
+.changeRed{
+    display:inline-block;
+    line-height:20px;
+    text-align: center;
+    font-size:14px;
+    font-weight: normal;
+    margin-right:5px;
+    color:#ffffff!important;
+    width:20px;
+    height:20px;
+    border:1px solid #EDEDED;
+    border-radius: 50%;
+    background: red;
+}
+.changeLine{
+    height:77px!important;
+    line-height:77px!important;
+    border-bottom:5px solid #DB2B1D;
+}
+.change ul li.hover b{
+    color:#fff;
+    background:#DB2B1D;
+}
+.change>div{
+    display:none;
+}
+.change .tab1{
+    display: block;
+}
+.change .tab1,.change .tab3{
+    padding-top:80px;
+}
+.change .tab1 div{
+   text-align: center;
+   margin-bottom:10px; 
+}
+.change .tab1 div span{
+    display: inline-block;
+    width:100px;
+    font-size: 14px;
+    color:#666;
+    text-align: right;
+    margin-right:10px;
+}
+.change .tab1 div>input{
+    width:280px;
+    height:40px;
+    border:1px solid #EAEAEA;
+    padding-left:5px;
+    border-radius: 5px;
+}
+.change .tab1 div.yz input{
+   width:180px;
+   margin-right:20px;
+}
+.change .tab1 div.yz img{
+    position:relative;
+    top:10px;
+   width:80px;
+   margin-top:10px;
+}
+.change .tab1 form>input{
+   width:275px;
+   height:40px;
+   border-radius: 3px;
+   border:1px solid #DB2B1D;
+   background: #DB2B1D;
+   color:#fff;
+   font-size:16px;
+   line-height: 40px;
+   margin-left:505px;
+   margin-top:15px;
+}
+.change .tab2 p{
+   width:480px;
+   height:48px;
+   line-height:48px;
+   margin:40px auto;
+   background: #F7FCFF;
+   font-size:12px;
+   color:#999;
+}
+.change .tab2 p b{
+    display: inline-block;
+    width:14px;
+    height:14px;
+    line-height:14px;
+    text-align: center;
+    border-radius: 50%;
+    background: #108EE9;
+    color:#fff;
+    margin-left: 25px;
+    margin-right:5px;
+}
+.change .tab2 p span{
+    color:#666;
+}
+.change .tab2 div{
+    width:480px;
+    height:40px;
+    margin:0px auto;
+}
+.change .tab2 div span{
+    display: inline-block;
+    font-size:16px;
+    height:40px;
+    color:#666;
+    line-height: 40px;
+    margin-left:10px;
+    margin-right:20px;
+}
+.change .tab2 div input{
+    height:40px;
+    width:150px;
+    border:1px solid #EAEAEA;
+    padding-left:5px;
+    border-radius: 3px;
+}
+.change .tab2 div a{
+    margin-left:20px;
+    display: inline-block;
+    width:110px;
+    height:40px;
+    font-size: 12px;
+    line-height:40px;
+    border:1px solid #EAEAEA;
+    border-radius: 5px;
+    background:#fafafa;
+    text-align: center;
+    color:#999;
+}
+.getCode{
+    margin-left:20px;
+    display: inline-block;
+    width:110px !important;
+    height:40px !important;
+    font-size: 12px;
+    line-height:40px;
+    border:1px solid #EAEAEA;
+    border-radius: 5px;
+    background:#fafafa;
+    text-align: center;
+    color:#999;
+}
+.change .tab2 div a b{
+    color:#666;
+    font-weight: normal;
+}
+.change .tab2 form>input{
+   width:275px;
+   height:40px;
+   border-radius: 3px;
+   border:1px solid #DB2B1D;
+   background: #DB2B1D;
+   color:#fff;
+   font-size:16px;
+   line-height: 40px;
+   margin-left:470px;
+   margin-top:40px;
+}
+.change .tab3 div{
+   text-align: center;
+   margin-bottom:10px; 
+}
+.change .tab3 div span{
+    display: inline-block;
+    width:100px;
+    font-size: 14px;
+    color:#666;
+    text-align: right;
+    margin-right:10px;
+}
+.change .tab3 div>input{
+    width:280px;
+    height:40px;
+    border:1px solid #EAEAEA;
+    padding-left:5px;
+    border-radius: 5px;
+}
+.change .tab3 form>input{
+   width:275px;
+   height:40px;
+   border-radius: 3px;
+   border:1px solid #DB2B1D;
+   background: #DB2B1D;
+   color:#fff;
+   font-size:16px;
+   line-height: 40px;
+   margin-left:505px;
+   margin-top:15px;
+}
+.change .tab4 h2{
+   font-size:24px;
+   color:#666;
+   height:40px;
+   line-height: 40px;
+}
+.change .tab4 p{
+   font-size:18px;
+   color:#999;
+   height:40px;
+   line-height: 40px;
+   margin-top:10px;
+}
+.change .tab4 p b{
+  color:#DB2B1D;
+  font-size:20px;
+}
+.change .tab4 p a{
+  color:#79AFE6;
+  font-size:20px;
+}
+.change .tab4{
+    text-align: center;
+    margin:30px auto;
+    padding-top:100px; 
+}
+.msg_tip{
+  display: inline-block;
+  color: #cad3df;
+  font-size: 12px;
+  vertical-align: middle;
+  margin-top: -5px;
+}
+label.error {
+    background:url(/resources/img/error_icon.png) no-repeat;
+    border-radius: 4px;
+    color: red;
+    display: inline-block;
+    padding-left: 20px;
+    vertical-align: middle;
+      margin-top: -5px;
+      line-height:20px;
+  }
+  @font-face {font-family: "iconfont";
+  src: url('../iconfont/iconfont.eot?t=1474609638'); /* IE9*/
+  src: url('../iconfont/iconfont.eot?t=1474609638#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../iconfont/iconfont.woff?t=1474609638') format('woff'), /* chrome, firefox */
+  url('../iconfont/iconfont.ttf?t=1474609638') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../iconfont/iconfont.svg?t=1474609638#iconfont') format('svg'); /* iOS 4.1- */
+}
+  .iconfont {
+  font-family:"iconfont" !important;
+  font-size:19px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}

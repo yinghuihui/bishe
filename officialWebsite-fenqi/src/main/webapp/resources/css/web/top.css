@@ -1,0 +1,98 @@
+a{
+   text-decoration:none; 
+    color: #111; 
+}
+.header_con{ 
+  width:1200px; margin:0 auto; 
+  overflow: hidden;
+}
+.logo{
+	float: left;
+    margin-left:20px;
+}
+.logo a> img{ 
+    border:none;
+    margin-top:12px;
+}
+.header_con_wrapper{
+  height: 83px;
+  background:#fff;
+  border-bottom:1px solid #eaeaea;
+}
+#nav { 
+    float:right;
+    overflow:hidden;
+    line-height: 80px;
+    width: 930px;
+    text-align: right;
+}
+#nav a{ 
+  display: inline-block; 
+  height: 80px; 
+  margin-right:5px;
+  line-height: 80px; 
+  text-align: center; 
+  font-size: 16px; 
+  width:128px;
+  margin-left: 15px ;
+}
+
+#nav a.hover,#nav a:hover{
+
+  color: #d92155;
+  position: relative;
+}
+#nav .hover{text-decoration: none; color: #fff; }
+#nav .db{
+   position:relative;
+}
+#nav .db img{
+   position:absolute;
+   left:-18px;
+   top:-20px;
+}
+#user{
+   float:right;
+    /*margin-left: 50px;*/
+    overflow:hidden;
+    /*text-align: right;*/
+}
+#user a.register{
+  display: inline-block; 
+  margin-right:7px;
+  font-size: 14px; 
+  border-radius:3px;
+  border:1px solid #eaeaea;
+    text-align: center; 
+  line-height: 32px;
+  height:32px;
+  width:80px;
+  margin-top:24px;
+}
+#user a.register:hover{
+  color:#fff;
+  background-color:#d92155;
+}
+#user .user1{
+  display: inline-block; 
+  margin-left:10px;
+  font-size: 14px; 
+  text-align: center; 
+  line-height: 32px;
+  height:32px;
+  max-width:160px;
+  margin-top:24px;
+  cursor: default
+}
+#user .login{
+  display: inline-block; 
+  margin-left:10px;
+  font-size: 14px; 
+  border-radius:3px;
+  border:1px solid #eaeaea;
+  text-align: center; 
+  line-height: 32px;
+  height:32px;
+  width:80px;
+  margin-top:24px;
+}

@@ -1,0 +1,306 @@
+*{
+	padding:0;
+	margin:0;
+	font-family:"Microsoft YaHei","arial";
+}
+ul,li{
+    list-style:none;}
+.main{
+    width:100%;
+    background:#F4F6F8;
+    overflow:hidden;
+    padding-top:30px;
+    padding-bottom:30px;
+}
+.main .aboutus{
+    width:1200px;
+    margin:0 auto;
+    height:100%;
+     background:#F4F6F8;
+}
+.tabs{
+    width:190px;
+    float:left;
+    margin-left: 21px;
+    background: #fff;
+}
+.tabs a{
+    display:block;
+    width:190px;
+    height:70px;
+    font-size:16px;
+    text-align:center;
+    line-height:70px;
+    color:#999;
+}
+
+.tabs a:hover,.tabs a.hover{
+    background:#d92155;
+    color:#fff;
+}
+
+.clearfix:after{
+  content: ""; 
+  display: block; 
+  height: 0; 
+  clear: both; 
+  visibility: hidden;  
+  }
+.clearfix {
+  zoom: 1; 
+  }
+.main #tabmain{
+    width:900px;
+    min-height:960px;
+    float:right;
+    background: #fff;
+    padding:0 30px 20px 30px;
+}
+.main #tabmainAbUs{
+    width:900px;
+    min-height:875px;
+    float:right;
+    background: #fff;
+    padding:0 30px 20px 30px;
+}
+.main #tabmainAbUs ul{
+    width: 100%;
+    border-bottom:1px solid #eee;
+    height: 70px;
+}
+.main #tabmainAbUs ul li{
+    float:left;
+    font-size:16px;
+    text-align:center;
+    color:#333;
+    height: 70px;
+    width: 130px;
+    line-height: 70px;
+    cursor: pointer;
+}
+.main #tabmainAbUs ul .ab-hover{
+    color:#d92155;
+    font-weight: 600;
+    border-bottom:2px solid #d92155;
+}
+.main #tabmainAbUs ul li:hover{
+    color:#d92155;
+    border-bottom:2px solid #d92155;
+}
+.main #tabmainAbUs .content{
+    margin: 0 auto;
+    width: 92%;
+    padding-top:60px;
+    
+}
+.main #tabmainAbUs .content img{
+      display: block;
+      margin:auto;
+      padding-bottom: 36px;
+}
+.main #tabmainAbUs .content p {
+    color:#333;
+    font-size:14px;
+    text-indent:28px;
+    line-height: 208%;
+}
+.main #tabmain h1{
+    line-height:30px;
+    font-weight:bold;
+    font-size:18px;
+    text-align: right
+}
+#tabmain>p{
+     clear:both
+}
+#tabmain>div{
+ width:880px;
+ min-height:860px;
+ padding:20px 20px;
+}
+#tabmain #tab5{
+    display:block;
+}
+#tabmain div h1{
+font-size:20px;
+color:#333;
+margin-bottom:25px;
+}
+#tabmain #tab2{display:none;}
+#tabmain #tab1 p{
+    width:650px;
+    color:#aaa;
+    font-size:14px;
+    line-height:24px;
+}
+/*#tabmain #tab1>div{
+   height:60px;
+   width:900px;
+}*/
+#tabmain #tab1 div img{
+   float:left;
+   margin-right:25px;
+   width:200px;
+   height:124px;
+}
+#tabmain #tab1 div h2{
+    font-size:20px;
+    color:#666;
+  float:left;
+  height:60px;
+  line-height:60px;
+}
+
+#tabmain div ul{
+    min-height:775px;
+}
+#tabmain div ul.arcContent li{
+    height:125px;
+    margin-bottom:35px;
+}
+#tabmain div ul li img{
+    float:left;
+    margin-right:15px;
+}
+#tabmain div ul li div{
+    float:left;
+    width:650px;
+    height:120px;
+}
+#tabmain div ul li div a{
+    font-size:18px;
+    display:block;
+    height:20px;
+    font-size:20px;
+    color:#666;
+    margin-bottom:8px;
+}
+#tabmain div ul li div p.mContent{
+    color:#aaa;
+    line-height:24px;
+}
+#tabmain div ul li div h3{
+    font-size:12px;
+    color:#ccc;
+    line-height:32px;
+}
+#tabmain div ul li div span{
+  font-size:12px;
+    color:#ccc;
+}
+#tabmain div ul li div p{
+   font-size:13px;
+   color:#aaa;
+   line-height:20px;
+   overflow:hidden
+}
+#tabmain #tab4{
+    height:1300px;
+}
+#tab4 .lianxi{
+    padding:50px 0;
+    height:180px;
+    width:880px;
+    border-bottom:1px dotted #464D5C;
+}
+#tab4 .lianxi h3{
+    font-size:20px;
+    font-weight: normal;
+    color:#666;
+}
+#tab4 .lianxi h4{
+    font-size:14px;
+    font-weight: normal;
+    color:#999;
+    margin-top:20px;
+}
+#tab4 ul.hezuo li{
+    margin:0;
+    margin-top:2px;
+    padding:0;
+    border-top:1px dotted #464D5C;
+    border-bottom:1px dotted #464D5C;
+    height:140px;
+    padding:50px 0;
+    width:880px;
+}
+#tab4 ul.hezuo li h2{
+    font-size:20px;
+    color:#333;
+    margin-bottom:25px;
+}
+#tab4 ul.hezuo li h3{
+    font-size:14px;
+    font-weight:normal;
+    color:#666;
+}
+#tab4 ul.hezuo li h4{
+    font-size:14px;
+    font-weight:normal;
+    color:#999;
+    margin-top:20px;
+}
+#tab4 ul.hezuo li.kefu{
+    border-bottom:0;
+}
+#tab5{
+    padding-bottom:30px;
+}
+#tab5 p{
+    width:880px;
+    height:30px;
+    line-height: 30px;
+    overflow: hidden;
+    padding-bottom:30px;
+}
+#tab5 p span{
+    float:left;
+    font-size:20px;
+    color:#333;
+    font-weight: bold;
+}
+#tab5 p>a{
+    float:right;
+    color:#7DB3E8;
+}
+#tab5 div{
+    width:880px;
+    min-height: 800px;
+    margin-bottom:30px;
+    line-height: 30px;
+}
+#tab5 p i{
+    float:left;
+}
+#tab5 p b{
+    float:right;
+    font-weight: normal;
+}
+#tab5 p i a:hover,#tab5 p b a:hover{
+    color:#7DB3E8;
+}
+.back_btn{color:#DB2B1D;padding-left:625px;}
+.BMap_mask{height:600px!important;width:830px!important;}
+.x-title{
+    display: block;
+    text-align: center;
+    font-size: 23px;
+    font-weight: 500;
+}
+.x-content p{
+    text-indent: 15px;
+    padding:5px 0;
+}
+.x-content img{
+    display: block;
+    margin: 10px auto;
+}
+.c-title{
+    display: block;
+    text-align: left;
+    font-size:20px;
+    font-weight: bold;
+}
+.c-content{
+    padding-top:20px;
+}

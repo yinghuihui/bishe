@@ -1,0 +1,236 @@
+a{
+   text-decoration:none; 
+    color: #111; 
+}
+.header_con{ 
+  width:1600px; margin:0 auto; 
+  overflow: hidden;
+}
+.logo{
+	float: left;
+    margin-left:20px;
+}
+.logo a> img{ 
+    border:none;
+    margin-top:12px;
+}
+.header_con_wrapper{
+  height: 83px;
+  background:#fff;
+  border-bottom:1px solid #eaeaea;
+}
+#nav { 
+    float:left;
+    overflow:hidden;
+    line-height: 80px;
+    width: 930px;
+    text-align: right;
+}
+#nav a{ 
+  display: inline-block; 
+  height: 80px; 
+  margin-right:5px;
+  line-height: 80px; 
+  text-align: center; 
+  font-size: 16px; 
+  width:128px;
+  margin-left: 15px ;
+}
+
+#nav a.hover,#nav a:hover{
+
+  color: #d92155;
+  position: relative;
+}
+#nav .hover{text-decoration: none; color: #fff; }
+#nav .db{
+   position:relative;
+}
+#nav .db img{
+   position:absolute;
+   left:-18px;
+   top:-20px;
+}
+#user{
+    float:left;
+    margin-left: 240px;
+    overflow:hidden;
+    /*text-align: right;*/
+}
+#user a.register{
+  display: inline-block; 
+  margin-right:7px;
+  font-size: 14px; 
+  border-radius:3px;
+  border:1px solid #eaeaea;
+    text-align: center; 
+  line-height: 32px;
+  height:32px;
+  width:80px;
+  margin-top:24px;
+}
+#user a.register:hover{
+  color:#fff;
+  background-color:#d92155;
+}
+#user .user1{
+  display: inline-block; 
+  margin-left:10px;
+  font-size: 14px; 
+  text-align: center; 
+  line-height: 32px;
+  height:32px;
+  max-width:160px;
+  margin-top:24px;
+  cursor: default
+}
+#user .login{
+  display: inline-block; 
+  margin-left:10px;
+  font-size: 14px; 
+  border-radius:3px;
+  border:1px solid #eaeaea;
+  text-align: center; 
+  line-height: 32px;
+  height:32px;
+  width:80px;
+  margin-top:24px;
+}
+#user a.login{
+  display: inline-block; 
+  margin-right:7px;
+  font-size: 14px; 
+  border-radius:3px;
+  border:1px solid #eaeaea;
+    text-align: center; 
+  line-height: 32px;
+  height:32px;
+  width:80px;
+  margin-top:24px;
+}
+#user a.login:hover{
+  color:#fff;
+  background-color:#d92155;
+}
+.loginForm{
+  height: 250px;
+  width: 280px;
+  position: absolute;
+  margin-left: 1350px;
+  margin-top: 60px;
+  background-color:deepskyblue;
+  z-index: 3;
+  border-radius: 5px;
+  display: none;
+}
+
+.login-input-box{
+    margin-top: 12px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    display: inline-block;
+}
+
+.login-input-box input{
+    width: 200px;
+    height: 32px;
+    margin-left: 18px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    padding-left: 42px;
+}
+
+.login-input-box input:hover{
+    border: 1px solid #ff7d0a;
+}
+
+.login-input-box input:after{
+    border: 1px solid #ff7d0a;
+}
+
+.login-input-box .icon{
+    width: 24px;
+    height: 24px;
+    margin: 6px 4px 6px 24px;
+    background-color: #ff7d0a;
+    display: inline-block;
+    position: absolute;
+    border-right: 1px solid #dcdcdc;
+}
+
+.login-input-box .icon.icon-user{
+    background: url("../assets/images/user.png");
+}
+
+.login-input-box .icon.icon-password{
+    background: url("../assets/images/password.png");
+}
+
+.remember-box{
+    width: auto;
+    height: auto;
+    margin-left: 18px;
+    margin-top: 12px;
+    font-size: 12px;
+    color: #6a6765;
+}
+
+.login-button-box{
+    margin-top: 12px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+}
+
+.login-button-box button{
+    background-color: #ff7d0a;
+    color: #ffffff;
+    font-size: 16px;
+    width: 242px;
+    height: 40px;
+    margin-left: 18px;
+    border: 1px solid #ff7d0a;
+    border-radius: 4px;
+}
+
+.login-button-box button:hover{
+    background-color: #ee7204;
+}
+
+.login-button-box button:active{
+    background-color: #ee7204;
+}
+
+.logon-box{
+    margin-top: 10px;
+    text-align: center;
+}
+
+.logon-box a{
+    margin: 30px;
+    color: #4a4744;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.logon-box a:hover{
+    color: #ff7d0a;
+}
+
+.logon-box a:active{
+    color: #ee7204;
+}
+#user a.login-out{
+    font-size: 12px;
+    line-height: 80px;
+}
+#user a.login-name{
+    font-size: 12px;
+    line-height: 80px;
+}
+#user a.login-out:hover{
+  color:#d92155;
+}

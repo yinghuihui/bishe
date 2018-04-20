@@ -1,0 +1,156 @@
+.pagination {
+    clear: both;
+    line-height: 25px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #999999;
+    font-size: 14px;
+    text-align: center;
+}
+
+.pagination a {
+    /*padding:4px 8px;
+    margin:10px 3px;
+    font-size:12px;
+    border:1px solid #DFDFDF;
+    background-color:#FFF;
+    color:#fdae1a;
+    text-decoration:none;
+    border-radius: 2px;*/
+    border-radius: 3px;
+    margin: 0 3px;
+    font-size: 10px;
+    border: 1px solid #ddd;
+    background-color: #FFF;
+    color: #999;
+    text-decoration: none;
+    width: inherit;
+    padding: 0 9px;
+    display: inline-block;
+    text-align: center;
+    font-family: arial;
+}
+
+.pagination a:link,
+.pagination a:visited,
+.pagination a:hover,
+.pagination a:active {
+    color: #666;
+}
+
+.pagination a:hover {
+    background-color: #e43f47;
+    color: #fff;
+    border: 1px solid #e43f47;
+}
+
+.pagination span {
+    font-size: 14px;
+}
+
+.pagination span.disabled,
+.pagination span.curr {
+    margin: 0 3px;
+    padding: 0px 9px;
+    font-size: 12px;
+    display: inline-block;
+    font-family: arial;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.pagination span.disabled {
+    border: 1px solid #DFDFDF;
+    background-color: #FFF;
+    color: #DFDFDF;
+    cursor: not-allowed;
+}
+
+.pagination span.curr {
+    color: #fff;
+    border: 1px solid #e43f47;
+    background-color: #e43f47;
+    position: relative;
+    /*
+    margin:10px 3px;
+    font-size:12px;
+    border:1px solid #FFF;
+    background-color:#FFF;
+    color:#000;
+    border-radius: 2px;*/
+}
+
+.pagination span.normalsize {
+    font-size: 12px;
+}
+
+.gopageDivWrap {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.gopageWrap {
+    /*display:inline-block;
+    width:44px;
+    height:18px;
+    border:1px solid #DFDFDF;
+    margin:0px 1px;
+    padding:0px;
+    position:relative;
+    left:0px;
+    top:5px;*/
+    display: inline-block;
+    width: 44px;
+    height: 25px;
+    border: 1px solid #DFDFDF;
+    margin: 0px 10px;
+    padding: 0px;
+    position: relative;
+    border-radius: 3px;
+    vertical-align: top;
+}
+
+.gopageBtn {
+    width: 44px;
+    height: 27px;
+    line-height: 27px;
+    padding: 0;
+    font-family: arial, '宋体', sans-serif;
+    text-align: center;
+    border: 0px;
+    background-color: #e43f47;
+    color: #FFF;
+    position: absolute;
+    left: 0px;
+    top: -1px;
+    display: none;
+}
+
+.gopageText {
+    /*width:42px;
+    height:16px;
+    text-align:center;
+    border:0px;
+    position:absolute;
+    left:0px;
+    top:0px;
+    outline:none;
+    display: inline-block;*/
+    width: 44px;
+    height: 25px;
+    padding: 0px;
+    line-height: 25px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    outline: none !important;
+    border: 0px;
+    text-align: center;
+}
+
+input.gopageText[type="text"]:focus {
+    outline: none !important;
+    border: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}

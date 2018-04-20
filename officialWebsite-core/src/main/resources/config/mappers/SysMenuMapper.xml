@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_sys_menu表:系统菜单模块 -->
+<mapper namespace="com.rongdu.ow.core.module.mapper.SysMenuMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.rongdu.ow.core.module.domain.SysMenu">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="icon_cls" property="iconCls" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="add_user" property="addUser" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="scriptid" property="scriptid" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,name,parent_id,url,icon_cls,sort,add_time,add_user,update_time,update_user,remark,is_delete,type,scriptid 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="name !='' and name !=null">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="parentId !='' and parentId !=null">
+                and parent_id = #{parentId,jdbcType=INTEGER}
+            </if>
+            <if test="url !='' and url !=null">
+                and url = #{url,jdbcType=VARCHAR}
+            </if>
+            <if test="iconCls !='' and iconCls !=null">
+                and icon_cls = #{iconCls,jdbcType=VARCHAR}
+            </if>
+            <if test="sort !='' and sort !=null">
+                and sort = #{sort,jdbcType=INTEGER}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="addUser !='' and addUser !=null">
+                and add_user = #{addUser,jdbcType=VARCHAR}
+            </if>
+            <if test="updateTime !=null">
+                and update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateUser !='' and updateUser !=null">
+                and update_user = #{updateUser,jdbcType=VARCHAR}
+            </if>
+            <if test="remark !='' and remark !=null">
+                and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="isDelete !='' and isDelete !=null">
+                and is_delete = #{isDelete,jdbcType=INTEGER}
+            </if>
+            <if test="type !='' and type !=null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="scriptid !='' and scriptid !=null">
+                and scriptid = #{scriptid,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.rongdu.ow.core.module.domain.SysMenu">
+   		<selectKey resultType="long" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+        insert into cl_sys_menu(`name`,parent_id,url,icon_cls,sort,add_time,add_user,update_time,update_user,remark,is_delete,type,scriptid)values(#{name,jdbcType=VARCHAR},#{parentId,jdbcType=INTEGER},#{url,jdbcType=VARCHAR},#{iconCls,jdbcType=VARCHAR},#{sort,jdbcType=INTEGER},#{addTime,jdbcType=TIMESTAMP},#{addUser,jdbcType=VARCHAR},#{updateTime,jdbcType=TIMESTAMP},#{updateUser,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},#{type,jdbcType=VARCHAR},#{scriptid,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.rongdu.ow.core.module.domain.SysMenu">
+        update cl_sys_menu set
+            name = #{name,jdbcType=VARCHAR},
+            parent_id = #{parentId,jdbcType=INTEGER},
+            url = #{url,jdbcType=VARCHAR},
+            icon_cls = #{iconCls,jdbcType=VARCHAR},
+            sort = #{sort,jdbcType=INTEGER},
+            add_time = #{addTime,jdbcType=TIMESTAMP},
+            add_user = #{addUser,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            update_user = #{updateUser,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            is_delete = #{isDelete,jdbcType=INTEGER},
+            type = #{type,jdbcType=VARCHAR},
+            scriptid = #{scriptid,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_sys_menu
+          <set>
+            <if test="name != null and name != ''">        
+                name = #{name,jdbcType=VARCHAR},                
+            </if>
+            <if test="parentId != null and parentId != ''">        
+                parent_id = #{parentId,jdbcType=INTEGER},                
+            </if>
+            <if test="url != null and url != ''">        
+                url = #{url,jdbcType=VARCHAR},                
+            </if>
+            <if test="iconCls != null and iconCls != ''">        
+                icon_cls = #{iconCls,jdbcType=VARCHAR},                
+            </if>
+            <if test="sort != null and sort != ''">        
+                sort = #{sort,jdbcType=INTEGER},                
+            </if>
+            <if test="addTime != null ">        
+                add_time = #{addTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="addUser != null and addUser != ''">        
+                add_user = #{addUser,jdbcType=VARCHAR},                
+            </if>
+            <if test="updateTime != null ">        
+                update_time = #{updateTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="updateUser != null and updateUser != ''">        
+                update_user = #{updateUser,jdbcType=VARCHAR},                
+            </if>
+            <if test="remark != null and remark != ''">        
+                remark = #{remark,jdbcType=VARCHAR},                
+            </if>
+            <if test="isDelete != null and isDelete != ''">        
+                is_delete = #{isDelete,jdbcType=INTEGER},                
+            </if>
+            <if test="type != null and type != ''">        
+                type = #{type,jdbcType=VARCHAR},                
+            </if>
+            <if test="scriptid != null and scriptid != ''">        
+                scriptid = #{scriptid,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from cl_sys_menu
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_sys_menu
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_sys_menu
+        <include refid="searchBy"/>
+    </select>
+    
+     <select id ="listByRole" resultType="java.util.HashMap"  parameterType ="java.util.Map" >
+	SELECT
+		DISTINCT menu.id as value,
+	 		menu.parent_id as parentId,
+		menu.name as label,
+		menu.name as name,
+		menu.url as url,
+		menu.icon_cls as iconCls,
+		menu.remark as remark,
+		menu.add_time as addTime,
+		menu.add_user as addUser,
+		menu.update_time as updateTime,
+		menu.update_user as updateUser,
+		menu.type as type,
+		menu.is_delete as isDelete,
+		menu.scriptid as scriptid,
+		menu.sort as sort
+	FROM
+	cl_sys_menu AS menu
+	LEFT JOIN cl_sys_role_menu as roleMenu ON roleMenu.menu_id =
+	menu.id
+	WHERE 1=1
+			AND menu.is_delete = #{isDelete}
+		<if test="type!=null and type!='' ">
+			 AND menu.type = #{type}
+		</if>
+		<if test="roleIds!=null and roleIds!='' ">
+			 AND roleMenu.role_id IN (#{roleIds})
+		</if>
+	ORDER BY menu.sort
+    </select>
+    
+    <select id="listAllByRole"  resultType="java.util.Map" parameterType="java.util.Map" >
+	    SELECT 
+			menu.id as value,
+			menu.parent_id as parentId,
+		 	menu.name as name,
+			menu.url as url,
+			menu.sort as sort,
+			menu.type as type,
+			menu.scriptid as scriptid,
+			(
+				CASE
+				WHEN (
+					menu.id NOT IN (
+						SELECT
+							roleMenu.menu_id
+						FROM
+							cl_sys_role_menu AS roleMenu
+						WHERE
+							roleMenu.role_id IN (#{roleIds})
+					)
+				) THEN
+					0
+				ELSE
+					1
+				END
+			) AS checked
+		FROM
+			cl_sys_menu AS menu
+		WHERE 1 = 1
+		<if test="isDelete!=null and isDelete!='' ">
+			AND menu.is_delete = #{isDelete}
+		</if>
+		<if test="type!=null and type!='' ">
+			AND menu.type = #{tpye}
+		</if>
+		ORDER BY menu.sort desc
+    </select>
+    
+    <!-- 根据用户名获取用户权限 -->
+	<select id="permByUserName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		cl_sys_menu menu
+		INNER JOIN (
+		SELECT
+		cl_sys_role_menu.menu_id
+		FROM
+		(
+		SELECT
+		cl_sys_role.*
+		FROM
+		cl_sys_user,
+		cl_sys_role,
+		cl_sys_user_role
+		WHERE
+		cl_sys_user.user_name = #{userName,jdbcType=VARCHAR}
+		AND cl_sys_user_role.user_id = cl_sys_user.id
+		AND cl_sys_role.id = cl_sys_user_role.role_id
+		) AS role,
+		cl_sys_role_menu
+		WHERE
+		role.id = cl_sys_role_menu.role_id
+		) AS role_menu ON role_menu.menu_id = menu.id
+		where 1=1
+		AND menu.type = '20'
+		ORDER BY
+		menu.id
+	</select>
+	
+	<select  id="findByUrlOrScriptid" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT
+			*
+		FROM
+			cl_sys_menu menu
+		WHERE
+			1 = 1
+		<if test="url!=null and url!='' ">
+			AND menu.url = #{url}
+		</if>
+		<if test="scriptid!=null and scriptid!='' ">
+			AND menu.scriptid = #{scriptid}
+		</if>
+		<if test="id!=null and id!='' ">
+			AND menu.id not in (#{id})
+		</if>
+	</select>
+    
+</mapper>

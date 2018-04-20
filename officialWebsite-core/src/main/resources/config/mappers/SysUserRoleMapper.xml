@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rongdu.ow.core.module.mapper.SysUserRoleMapper">
+	<resultMap id="sysUserRoleResult" type="com.rongdu.ow.core.module.domain.SysUserRole">
+		<result column="id" property="id" />
+		<result column="role_id" property="roleId" />
+		<result column="user_id" property="userId" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.rongdu.ow.core.module.domain.SysUserRole">
+		<selectKey resultType="long" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into cl_sys_user_role(
+			role_id,
+			user_id				
+		)
+		values (
+			#{roleId},
+			#{userId}				
+		)
+	</insert>
+	
+	<delete id="deleteByUserId" parameterType="long">
+		delete from cl_sys_user_role
+		where
+		user_id  = #{userId}
+ 	</delete> 
+ 	
+ 	<resultMap id="tempMap" type="java.lang.Long">
+		<result column="role_id" property="roleId" />
+	</resultMap>
+	
+    <select id="listByMap"	parameterType="java.util.Map" resultMap="tempMap">
+		select role_id 
+		from  cl_sys_user_role
+		where 1=1
+		<if test="roleId != null">
+		    AND role_id = #{roleId}
+        </if>
+        <if test="userId != null">
+            AND user_id = #{userId}
+        </if>
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+	</select>
+
+</mapper>
