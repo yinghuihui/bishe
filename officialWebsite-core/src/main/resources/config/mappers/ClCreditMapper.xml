@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_credit表:授信额度表模块 -->
+<mapper namespace="com.rongdu.ow.core.module.mapper.ClCreditMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.rongdu.ow.core.module.domain.ClCredit">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="total" property="total" jdbcType="DECIMAL" />
+        <result column="used" property="used" jdbcType="DECIMAL" />
+        <result column="unuse" property="unuse" jdbcType="DECIMAL" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,total,used,unuse,state,update_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="total != null and total != '' ">
+                and total = #{total,jdbcType=DECIMAL}
+            </if>
+            <if test="used != null and used != '' ">
+                and used = #{used,jdbcType=DECIMAL}
+            </if>
+            <if test="unuse != null and unuse != '' ">
+                and unuse = #{unuse,jdbcType=DECIMAL}
+            </if>
+            <if test="state != null and state != '' ">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.rongdu.ow.core.module.domain.ClCredit">
+        insert into cl_credit(user_id,total,used,unuse,state,update_time)values(#{userId,jdbcType=BIGINT},#{total,jdbcType=DECIMAL},#{used,jdbcType=DECIMAL},#{unuse,jdbcType=DECIMAL},#{state,jdbcType=VARCHAR},#{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.rongdu.ow.core.module.domain.ClCredit">
+        update cl_credit set 
+            user_id = #{userId,jdbcType=BIGINT},
+            total = #{total,jdbcType=DECIMAL},
+            used = #{used,jdbcType=DECIMAL},
+            unuse = #{unuse,jdbcType=DECIMAL},
+            state = #{state,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_credit
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="total != null and total != '' ">        
+                total = #{total,jdbcType=DECIMAL},                
+            </if>
+            <if test="used != null and used != '' ">        
+                used = #{used,jdbcType=DECIMAL},                
+            </if>
+            <if test="unuse != null and unuse != '' ">        
+                unuse = #{unuse,jdbcType=DECIMAL},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_credit
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_credit
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_credit
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

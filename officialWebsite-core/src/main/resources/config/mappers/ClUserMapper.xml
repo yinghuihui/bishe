@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_user表:用户表模块 -->
+<mapper namespace="com.rongdu.ow.core.module.mapper.ClUserMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.rongdu.ow.core.module.domain.ClUser">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+        <result column="login_pwd" property="loginPwd" jdbcType="VARCHAR" />
+        <result column="loginpwd_modify_time" property="loginpwdModifyTime" jdbcType="TIMESTAMP" />
+        <result column="regist_time" property="registTime" jdbcType="TIMESTAMP" />
+        <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,login_name,login_pwd,loginpwd_modify_time,regist_time,login_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="loginName != null and loginName != '' ">
+                and login_name = #{loginName,jdbcType=VARCHAR}
+            </if>
+            <if test="loginPwd != null and loginPwd != '' ">
+                and login_pwd = #{loginPwd,jdbcType=VARCHAR}
+            </if>
+            <if test="loginpwdModifyTime != null">
+                and loginpwd_modify_time = #{loginpwdModifyTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="registTime != null">
+                and regist_time = #{registTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="loginTime != null">
+                and login_time = #{loginTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.rongdu.ow.core.module.domain.ClUser">
+        insert into cl_user(login_name,login_pwd,loginpwd_modify_time,regist_time,login_time)values(#{loginName,jdbcType=VARCHAR},#{loginPwd,jdbcType=VARCHAR},#{loginpwdModifyTime,jdbcType=TIMESTAMP},#{registTime,jdbcType=TIMESTAMP},#{loginTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.rongdu.ow.core.module.domain.ClUser">
+        update cl_user set 
+            login_name = #{loginName,jdbcType=VARCHAR},
+            login_pwd = #{loginPwd,jdbcType=VARCHAR},
+            loginpwd_modify_time = #{loginpwdModifyTime,jdbcType=TIMESTAMP},
+            regist_time = #{registTime,jdbcType=TIMESTAMP},
+            login_time = #{loginTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_user
+          <set>
+            <if test="loginName != null and loginName != '' ">        
+                login_name = #{loginName,jdbcType=VARCHAR},                
+            </if>
+            <if test="loginPwd != null and loginPwd != '' ">        
+                login_pwd = #{loginPwd,jdbcType=VARCHAR},                
+            </if>
+            <if test="loginpwdModifyTime != null">
+                loginpwd_modify_time = #{loginpwdModifyTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="registTime != null">
+                regist_time = #{registTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="loginTime != null">
+                login_time = #{loginTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_borrow_repay表:还款计划表模块 -->
+<mapper namespace="com.rongdu.ow.core.module.mapper.ClBorrowRepayMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.rongdu.ow.core.module.domain.ClBorrowRepay">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="borrow_id" property="borrowId" jdbcType="BIGINT" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="repay_time" property="repayTime" jdbcType="TIMESTAMP" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="penalty_amout" property="penaltyAmout" jdbcType="DECIMAL" />
+        <result column="penalty_day" property="penaltyDay" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,borrow_id,amount,repay_time,state,penalty_amout,penalty_day,create_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="borrowId != null and borrowId != '' ">
+                and borrow_id = #{borrowId,jdbcType=BIGINT}
+            </if>
+            <if test="amount != null and amount != '' ">
+                and amount = #{amount,jdbcType=DECIMAL}
+            </if>
+            <if test="repayTime != null">
+                and repay_time = #{repayTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="state != null and state != '' ">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="penaltyAmout != null and penaltyAmout != '' ">
+                and penalty_amout = #{penaltyAmout,jdbcType=DECIMAL}
+            </if>
+            <if test="penaltyDay != null and penaltyDay != '' ">
+                and penalty_day = #{penaltyDay,jdbcType=INTEGER}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.rongdu.ow.core.module.domain.ClBorrowRepay">
+        insert into cl_borrow_repay(user_id,borrow_id,amount,repay_time,state,penalty_amout,penalty_day,create_time)values(#{userId,jdbcType=BIGINT},#{borrowId,jdbcType=BIGINT},#{amount,jdbcType=DECIMAL},#{repayTime,jdbcType=TIMESTAMP},#{state,jdbcType=VARCHAR},#{penaltyAmout,jdbcType=DECIMAL},#{penaltyDay,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.rongdu.ow.core.module.domain.ClBorrowRepay">
+        update cl_borrow_repay set 
+            user_id = #{userId,jdbcType=BIGINT},
+            borrow_id = #{borrowId,jdbcType=BIGINT},
+            amount = #{amount,jdbcType=DECIMAL},
+            repay_time = #{repayTime,jdbcType=TIMESTAMP},
+            state = #{state,jdbcType=VARCHAR},
+            penalty_amout = #{penaltyAmout,jdbcType=DECIMAL},
+            penalty_day = #{penaltyDay,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_borrow_repay
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="borrowId != null and borrowId != '' ">        
+                borrow_id = #{borrowId,jdbcType=BIGINT},                
+            </if>
+            <if test="amount != null and amount != '' ">        
+                amount = #{amount,jdbcType=DECIMAL},                
+            </if>
+            <if test="repayTime != null">
+                repay_time = #{repayTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="penaltyAmout != null and penaltyAmout != '' ">        
+                penalty_amout = #{penaltyAmout,jdbcType=DECIMAL},                
+            </if>
+            <if test="penaltyDay != null and penaltyDay != '' ">        
+                penalty_day = #{penaltyDay,jdbcType=INTEGER},                
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_repay
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_repay
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_repay
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

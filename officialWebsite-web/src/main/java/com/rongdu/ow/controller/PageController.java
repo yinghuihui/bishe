@@ -100,5 +100,15 @@ public class PageController extends BaseController {
 	public String credit(HttpSession session) throws Exception {
 		return "/User/credit";
 	}
+	/**
+	 * 借款首页
+	 * 
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/modules/web/User/borrowIndex.htm")
+	public String borrowIndex(HttpSession session) throws Exception {
+		return "/User/borrowindex";
+	}
 
 }

@@ -79,18 +79,18 @@ public class LoginController extends BaseController{
 //		ServletUtils.writeToResponse(response, resultMap);
 //	}
 
-//	/**
-//	 * PC注册
-//	 * @param request
-//	 * @param response
-//	 * @param loginName 登录名
-//	 * @param loginPwd 登录密码
-//	 * @param vcode 验证码
-//	 * @param blackBox 
-//	 */
-//	@RequestMapping(value = "/api/user/pcRegister.htm", method = RequestMethod.POST)
-//	public void pcRegister() {
-//		String serverHost = Global.getValue(" ");
+	/**
+	 * PC注册
+	 * @param request
+	 * @param response
+	 * @param loginName 登录名
+	 * @param loginPwd 登录密码
+	 * @param vcode 验证码
+	 * @param blackBox 
+	 */
+	@RequestMapping(value = "/api/user/pcRegister.htm", method = RequestMethod.POST)
+	public void pcRegister() {
+//		String serverHost = Global.getValue("register_ip");
 //		String originHeader=request.getHeader("Origin");
 //		if (serverHost.contains(originHeader)){
 //			response.setHeader("Access-Control-Allow-Origin", originHeader);
@@ -98,23 +98,23 @@ public class LoginController extends BaseController{
 //			response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
 //			response.setHeader("Access-Control-Allow-Headers", "DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type");
 //		}
-//		final String mobile = request.getParameter("mobile");
-//		final String password = request.getParameter("password");
-//		final String code = request.getParameter("code");
-//		System.out.println("code"+password.toUpperCase());
-//		Map result = null;
-////		result = userService.pcRegisterUser(request, mobile,
-////				password.toUpperCase(), code, "", "","",
-////				"", "pc", "","pc");
-//		if ((Boolean) result.get("success")) {
-//			result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
-//			result.put(Constant.RESPONSE_CODE_MSG, "注册成功!");
-//		} else {
-//			result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
-//			result.put(Constant.RESPONSE_CODE_MSG, result.get("msg"));
-//		}
-//		ServletUtils.writeToResponse(response,result);
-//	}
+		final String mobile = request.getParameter("mobile");
+		final String password = request.getParameter("password");
+		final String code = request.getParameter("code");
+		System.out.println("code"+password.toUpperCase());
+		Map result = null;
+//		result = userService.pcRegisterUser(request, mobile,
+//				password.toUpperCase(), code, "", "","",
+//				"", "pc", "","pc");
+		if ((Boolean) result.get("success")) {
+			result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
+			result.put(Constant.RESPONSE_CODE_MSG, "注册成功!");
+		} else {
+			result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
+			result.put(Constant.RESPONSE_CODE_MSG, result.get("msg"));
+		}
+		ServletUtils.writeToResponse(response,result);
+	}
 //
 //}
 	@RequestMapping(value = "/module/user/login.htm", method = RequestMethod.POST)
@@ -124,6 +124,8 @@ public class LoginController extends BaseController{
 //				password.toUpperCase(), code, "", "","",
 //				"", "pc", "","pc");
 		request.getSession().setAttribute("user", "yinghh");
+		request.getSession().setAttribute("isborrow", 0);
+		request.getSession().setAttribute("isAuth", 0);
 		result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 		result.put(Constant.RESPONSE_CODE_MSG, "登录成功!");
 		ServletUtils.writeToResponse(response,result);

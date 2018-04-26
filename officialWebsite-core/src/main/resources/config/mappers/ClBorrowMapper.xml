@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_borrow表:借款信息表模块 -->
+<mapper namespace="com.rongdu.ow.core.module.mapper.ClBorrowMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.rongdu.ow.core.module.domain.ClBorrow">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="real_amount" property="realAmount" jdbcType="DECIMAL" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="time_limit" property="timeLimit" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="card_id" property="cardId" jdbcType="BIGINT" />
+        <result column="interest" property="interest" jdbcType="DECIMAL" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="borrow_use" property="borrowUse" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,order_no,amount,real_amount,create_time,time_limit,state,card_id,interest,remark,borrow_use 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="amount != null and amount != '' ">
+                and amount = #{amount,jdbcType=DECIMAL}
+            </if>
+            <if test="realAmount != null and realAmount != '' ">
+                and real_amount = #{realAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="timeLimit != null and timeLimit != '' ">
+                and time_limit = #{timeLimit,jdbcType=VARCHAR}
+            </if>
+            <if test="state != null and state != '' ">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="cardId != null and cardId != '' ">
+                and card_id = #{cardId,jdbcType=BIGINT}
+            </if>
+            <if test="interest != null and interest != '' ">
+                and interest = #{interest,jdbcType=DECIMAL}
+            </if>
+            <if test="remark != null and remark != '' ">
+                and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="borrowUse != null and borrowUse != '' ">
+                and borrow_use = #{borrowUse,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.rongdu.ow.core.module.domain.ClBorrow">
+        insert into cl_borrow(user_id,order_no,amount,real_amount,create_time,time_limit,state,card_id,interest,remark,borrow_use)values(#{userId,jdbcType=BIGINT},#{orderNo,jdbcType=VARCHAR},#{amount,jdbcType=DECIMAL},#{realAmount,jdbcType=DECIMAL},#{createTime,jdbcType=TIMESTAMP},#{timeLimit,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},#{cardId,jdbcType=BIGINT},#{interest,jdbcType=DECIMAL},#{remark,jdbcType=VARCHAR},#{borrowUse,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.rongdu.ow.core.module.domain.ClBorrow">
+        update cl_borrow set 
+            user_id = #{userId,jdbcType=BIGINT},
+            order_no = #{orderNo,jdbcType=VARCHAR},
+            amount = #{amount,jdbcType=DECIMAL},
+            real_amount = #{realAmount,jdbcType=DECIMAL},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            time_limit = #{timeLimit,jdbcType=VARCHAR},
+            state = #{state,jdbcType=VARCHAR},
+            card_id = #{cardId,jdbcType=BIGINT},
+            interest = #{interest,jdbcType=DECIMAL},
+            remark = #{remark,jdbcType=VARCHAR},
+            borrow_use = #{borrowUse,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_borrow
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="orderNo != null and orderNo != '' ">        
+                order_no = #{orderNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="amount != null and amount != '' ">        
+                amount = #{amount,jdbcType=DECIMAL},                
+            </if>
+            <if test="realAmount != null and realAmount != '' ">        
+                real_amount = #{realAmount,jdbcType=DECIMAL},                
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="timeLimit != null and timeLimit != '' ">        
+                time_limit = #{timeLimit,jdbcType=VARCHAR},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="cardId != null and cardId != '' ">        
+                card_id = #{cardId,jdbcType=BIGINT},                
+            </if>
+            <if test="interest != null and interest != '' ">        
+                interest = #{interest,jdbcType=DECIMAL},                
+            </if>
+            <if test="remark != null and remark != '' ">        
+                remark = #{remark,jdbcType=VARCHAR},                
+            </if>
+            <if test="borrowUse != null and borrowUse != '' ">        
+                borrow_use = #{borrowUse,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>
