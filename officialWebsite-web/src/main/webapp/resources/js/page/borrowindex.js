@@ -71,6 +71,10 @@
     //判断是否已借款
   }else if(isauth=="0"||isauth==0){
      window.location.href = "/modules/web/User/credit.htm"
+   var isborr = $(".isborrow").val()
+   var usero =  $("#usersession").val();
+  if(usero==null||usero==undefined||usero==""){
+     window.location.href = "/modules/web/User/register.htm";
   }else if(isborr=="0"||(isborr==0)){
       $(".borrow_index").css("display","none")
       $(".borrow_progress").css("display","block")
