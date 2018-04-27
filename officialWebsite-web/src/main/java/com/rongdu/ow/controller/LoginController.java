@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,15 +13,20 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.rongdu.ow.controller.base.BaseController;
 import com.rongdu.ow.core.common.context.Constant;
 import com.rongdu.ow.core.common.context.Global;
 import com.rongdu.ow.core.common.util.ServletUtils;
 import com.rongdu.ow.core.common.util.StringUtil;
+import com.rongdu.ow.core.module.service.ClUserService;
 @Controller
 @Scope("prototype")
 public class LoginController extends BaseController{
+	
+	@Resource
+	private ClUserService clUserService;
 	
 	/**
 	 * 首页
@@ -88,8 +94,8 @@ public class LoginController extends BaseController{
 	 * @param vcode 验证码
 	 * @param blackBox 
 	 */
-	@RequestMapping(value = "/api/user/pcRegister.htm", method = RequestMethod.POST)
-	public void pcRegister() {
+	@RequestMapping(value = "/modules/user/pcRegister.htm", method = RequestMethod.POST)
+	public void pcRegister(HttpServletRequest request) {
 //		String serverHost = Global.getValue("register_ip");
 //		String originHeader=request.getHeader("Origin");
 //		if (serverHost.contains(originHeader)){
@@ -103,9 +109,8 @@ public class LoginController extends BaseController{
 		final String code = request.getParameter("code");
 		System.out.println("code"+password.toUpperCase());
 		Map result = null;
-//		result = userService.pcRegisterUser(request, mobile,
-//				password.toUpperCase(), code, "", "","",
-//				"", "pc", "","pc");
+		result = clUserService.pcRegisterUser(request, mobile,
+				password.toUpperCase(), code);
 		if ((Boolean) result.get("success")) {
 			result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 			result.put(Constant.RESPONSE_CODE_MSG, "注册成功!");

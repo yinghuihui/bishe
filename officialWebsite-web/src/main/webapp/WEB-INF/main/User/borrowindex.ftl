@@ -28,12 +28,8 @@
    <div class="main">
          <div class="credit_main">
         <input type="hidden" id="usersession" value=${Session.user}>
-
         <input type="hidden" id="isborrow" value=${Session.isborrow}>
         <input type="hidden" id="isauth" value=${Session.isAuth}>
-
-        <input type="text" id="isborrow" value=${Session.isborrow}>
-
           <div class = "borrow_index">
                <form  id="borrowindex_1" method="post">
             <dl>

@@ -42,7 +42,7 @@
     </sql>
     
     
-    <insert id="save" parameterType="com.rongdu.ow.core.module.domain.ClUser">
+    <insert id="save" parameterType="com.rongdu.ow.core.module.domain.ClUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into cl_user(login_name,login_pwd,loginpwd_modify_time,regist_time,login_time)values(#{loginName,jdbcType=VARCHAR},#{loginPwd,jdbcType=VARCHAR},#{loginpwdModifyTime,jdbcType=TIMESTAMP},#{registTime,jdbcType=TIMESTAMP},#{loginTime,jdbcType=TIMESTAMP})
     </insert>
 

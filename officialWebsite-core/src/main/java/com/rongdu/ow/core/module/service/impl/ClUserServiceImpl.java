@@ -1,14 +1,29 @@
 package com.rongdu.ow.core.module.service.impl;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.rongdu.ow.core.common.context.Global;
 import com.rongdu.ow.core.common.mapper.BaseMapper;
 import com.rongdu.ow.core.common.service.impl.BaseServiceImpl;
+import com.rongdu.ow.core.common.util.StringUtil;
+import com.rongdu.ow.core.module.domain.ClCredit;
 import com.rongdu.ow.core.module.domain.ClUser;
+import com.rongdu.ow.core.module.domain.ClUserAuth;
+import com.rongdu.ow.core.module.domain.ClUserBaseInfo;
+import com.rongdu.ow.core.module.mapper.ClCreditMapper;
+import com.rongdu.ow.core.module.mapper.ClUserAuthMapper;
+import com.rongdu.ow.core.module.mapper.ClUserBaseInfoMapper;
 import com.rongdu.ow.core.module.mapper.ClUserMapper;
 import com.rongdu.ow.core.module.service.ClUserService;
 
@@ -31,22 +46,27 @@ public class ClUserServiceImpl extends BaseServiceImpl<ClUser, Long> implements 
    
     @Resource
     private ClUserMapper clUserMapper;
-
+    @Resource
+    private ClUserBaseInfoMapper clUserBaseInfoMapper;
+    @Resource
+    private ClCreditMapper clCreditMapper;
+    @Resource
+    private ClUserAuthMapper clUserAuthMapper;
+    
 	@Override
 	public BaseMapper<ClUser, Long> getMapper() {
 		return clUserMapper;
 	}
-//	@Transactional
-//    public Map pcRegisterUser(HttpServletRequest request, String phone, String pwd, String vcode, String invitationCode,
-//                            String registerCoordinate,String registerAddr,String address, String regClient, String signMsg, String channelCode) {
-//        try {
-//            if (StringUtil.isEmpty(phone) || !StringUtil.isPhone(phone) || StringUtil.isEmpty(pwd) || StringUtil.isEmpty(vcode) || pwd.length() < 32) {
-//            	Map ret = new LinkedHashMap();
-//                ret.put("success", false);
-//                ret.put("msg", "参数有误");
-//                return ret;
-//            }
-//            
+	@Override
+    public Map pcRegisterUser(HttpServletRequest request, String phone, String pwd, String vcode) {
+        try {
+            if (StringUtil.isEmpty(phone) || !StringUtil.isPhone(phone) || StringUtil.isEmpty(pwd) || StringUtil.isEmpty(vcode) || pwd.length() < 32) {
+            	Map ret = new LinkedHashMap();
+                ret.put("success", false);
+                ret.put("msg", "参数有误");
+                return ret;
+            }
+            
 //            CloanUserService cloanUserService = (CloanUserService) BeanUtil.getBean("cloanUserService");
 //            long todayCount = cloanUserService.todayCount();
 //            String dayRegisterMax_ = Global.getValue("day_register_max");
@@ -59,7 +79,7 @@ public class ClUserServiceImpl extends BaseServiceImpl<ClUser, Long> implements 
 //                     return ret;
 //            	}
 //            }
-//            
+            
 //            ClSmsService clSmsService = (ClSmsService)BeanUtil.getBean("clSmsService");
 //            int results = clSmsService.verifySms(phone, SmsModel.SMS_TYPE_REGISTER, vcode);
 //            String vmsg;
@@ -76,25 +96,22 @@ public class ClUserServiceImpl extends BaseServiceImpl<ClUser, Long> implements 
 //                ret.put("msg", vmsg);
 //                return ret;
 //            }
-//
-//            Map old = mybatisService.queryRec("usr.queryUserByLoginName", phone);
-//            if (old != null) {
-//                Map ret = new LinkedHashMap();
-//                ret.put("success", false);
-//                ret.put("msg", "该手机号码已被注册");
-//                return ret;
-//            }
-//            
-//            // 渠道
-//            long channelId = 0;
-//            if(StringUtil.isNotBlank(channelCode)){
-//            	ChannelService channelService = (ChannelService) BeanUtil.getBean("channelService");
-//            	Channel channel = channelService.findByCode(channelCode);
-//            	 if (channel != null) {
-//            		 channelId=channel.getId();
-//                 }
-//            }
-//            
+            Map<String,Object> userMap = new HashMap<String, Object>();
+            userMap.put("phone", phone);
+            ClUser user = clUserMapper.findSelective(userMap);
+            if (user != null) {
+                Map ret = new LinkedHashMap();
+                ret.put("success", false);
+                ret.put("msg", "该手机号码已被注册");
+                return ret;
+            }
+            
+            // 渠道
+            ClUser newUser = new ClUser();
+            newUser.setLoginName(phone);
+            newUser.setLoginPwd(pwd);
+            newUser.setRegistTime(new Date());
+            long userId = clUserMapper.save(newUser);
 //            String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 //            long userId = dbService.insert(SqlUtil.buildInsertSqlMap("cl_user", new Object[][]{
 //                {"login_name", phone},
@@ -106,7 +123,11 @@ public class ClUserServiceImpl extends BaseServiceImpl<ClUser, Long> implements 
 //                {"register_client", regClient},
 //                {"channel_id", channelId}
 //            }));
-//
+            ClUserBaseInfo userBaseInfo = new ClUserBaseInfo();
+            userBaseInfo.setUserId(userId);
+            userBaseInfo.setPhone(phone);
+            userBaseInfo.setCreateTime(new Date());
+            clUserBaseInfoMapper.save(userBaseInfo);
 //            dbService.insert(SqlUtil.buildInsertSqlMap("cl_user_base_info", new Object[][]{
 //                {"user_id", userId},
 //                {"phone", phone},
@@ -114,18 +135,26 @@ public class ClUserServiceImpl extends BaseServiceImpl<ClUser, Long> implements 
 //                {"register_addr", registerAddr},
 //                {"address", address}
 //            }));
-//
+            ClCredit clcredit = new ClCredit();
+            clcredit.setUserId(userId);
+            clcredit.setState("10");
+            clcredit.setUnuse(Double.parseDouble((Global.getValue("init_credit"))));
+            clcredit.setTotal(Double.parseDouble((Global.getValue("init_credit"))));
+            clcredit.setUpdateTime(new Date());
+            clCreditMapper.save(clcredit);
 //            dbService.insert(SqlUtil.buildInsertSqlMap("arc_credit", new Object[][]{
 //                {"consumer_no", userId},
 //                {"total", Global.getValue("init_credit")},
 //                {"unuse", Global.getValue("init_credit")},
 //                {"state", 10}
 //            }));
-//            dbService.insert(SqlUtil.buildInsertSqlMap("cl_profit_amount", new Object[][]{
-//                {"user_id", userId},
-//                {"state", "10"}
-//            }));
-//
+            ClUserAuth clUserAuth = new ClUserAuth();
+            clUserAuth.setUserId(userId);
+            clUserAuth.setIdState("10");
+            clUserAuth.setWorkInfoState("10");
+            clUserAuth.setPhoneState("10");
+            clUserAuth.setBankCardState("10");
+            clUserAuthMapper.save(clUserAuth);
 //            dbService.insert(SqlUtil.buildInsertSqlMap("cl_user_auth", new Object[][]{
 //                {"user_id", userId},
 //                {"id_state", 10},
@@ -136,21 +165,21 @@ public class ClUserServiceImpl extends BaseServiceImpl<ClUser, Long> implements 
 //                {"work_info_state", 10},
 //                {"other_info_state", 10},
 //            }));
-//            
-//            //2017.5.6 仅用于demo演示环境
-//            demoUser(userId);
-//            
-//            Map result = new LinkedHashMap();
-//            result.put("success", true);
-//            result.put("msg", "注册成功");
-//            return result;
-//        } catch (Exception e) {
-//            logger.error("注册失败", e);
-//            Map ret = new LinkedHashMap();
-//            ret.put("success", false);
-//            ret.put("msg", "注册失败");
-//            return ret;
-//        }
-//    }
+            
+            //仅用于demo演示环境
+            //demoUser(userId);
+            
+            Map result = new LinkedHashMap();
+            result.put("success", true);
+            result.put("msg", "注册成功");
+            return result;
+        } catch (Exception e) {
+            logger.error("注册失败", e);
+            Map ret = new LinkedHashMap();
+            ret.put("success", false);
+            ret.put("msg", "注册失败");
+            return ret;
+        }
+    }
 	
 }

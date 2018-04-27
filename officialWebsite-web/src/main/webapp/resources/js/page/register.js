@@ -178,7 +178,6 @@ define(function (require, exports, modlue) {
                             type: "post",
                             data:data,
                             dataType: 'json',
-                            xhrFields:{withCredentials:true},
                             success: function (data) {
                                 if (data.code == 200) {
                                     //$("#regPhone").text(data.mobilePhone);

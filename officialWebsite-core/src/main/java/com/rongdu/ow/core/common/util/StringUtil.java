@@ -52,12 +52,12 @@ public final class StringUtil extends tool.util.StringUtil {
 		if(!isMatched){
 			return false;
 		}
-		String segment = phone.substring(0, 3);
-		String segments = Global.getValue("phone_number_segment");
-		if(segments.contains(segment)){
-			return true;
-		}
-		return false;
+//		String segment = phone.substring(0, 3);
+//		String segments = Global.getValue("phone_number_segment");
+//		if(segments.contains(segment)){
+//			return true;
+//		}
+		return true;
 	}
 	
 	/**
