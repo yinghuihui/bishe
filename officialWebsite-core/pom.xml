@@ -38,7 +38,11 @@
 		    <artifactId>fastjson</artifactId>
 		    <version>1.2.29</version>
 		</dependency>
-
+        <dependency>
+			    <groupId>tool</groupId>
+			    <artifactId>common-util</artifactId>
+			    <version>1.0.3</version>
+		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
