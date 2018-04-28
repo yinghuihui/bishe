@@ -190,7 +190,7 @@ public class ContentController extends ManageBaseController {
 		String s = File.separator;
 		String filePath = s+"data"+s+"image"+s+DateUtil.dateStr(DateUtil.getNow(), DateUtil.DATEFORMAT_STR_012)+s+fileName;
 		if (s.equals("\\")) {
-			filePath = "E:"+filePath;
+			filePath = "D:"+filePath;
 			filePath = filePath.replaceAll("\\\\","/");
 		}
 		File files = new File(filePath);

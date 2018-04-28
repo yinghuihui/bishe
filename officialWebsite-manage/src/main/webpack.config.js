@@ -22,7 +22,7 @@ module.exports = {
      '\*': {
        //target: 'http://10.10.1.64:8081',
        //target: 'http://10.10.2.124:8081',
-       target: 'http://127.0.0.1:8081',
+       target: 'http://127.0.0.1:8080',
        secure: false
      }
     } 

@@ -72,7 +72,7 @@ public class UeditorActionEnter extends ActionEnter{
 			String s = File.separator;
 			String savePath = s+"data"+s+"image"+s+date+s+(String)conf.get("savePath");
 			if (s.equals("\\")) {
-				savePath = "E:"+savePath;
+				savePath = "D:"+savePath;
 			}
 			conf.put("rootPath", "");
 			conf.put("savePath", savePath);

@@ -3,12 +3,12 @@ a{
     color: #111; 
 }
 .header_con{ 
-  width:1600px; margin:0 auto; 
+  width:100%; margin:0 auto; 
   overflow: hidden;
 }
 .logo{
 	float: left;
-    margin-left:20px;
+    margin-left:10px;
 }
 .logo a> img{ 
     border:none;
@@ -23,8 +23,9 @@ a{
     float:left;
     overflow:hidden;
     line-height: 80px;
-    width: 930px;
+    width:900px;
     text-align: right;
+    margin-left:5px;
 }
 #nav a{ 
   display: inline-block; 
@@ -53,7 +54,7 @@ a{
 }
 #user{
     float:left;
-    margin-left: 240px;
+    margin-left: 0px;
     overflow:hidden;
     /*text-align: right;*/
 }
@@ -116,10 +117,10 @@ a{
   height: 250px;
   width: 280px;
   position: absolute;
-  margin-left: 1350px;
+  margin-left: 1050px;
   margin-top: 60px;
   background-color:deepskyblue;
-  z-index: 3;
+  z-index: 4;
   border-radius: 5px;
   display: none;
 }

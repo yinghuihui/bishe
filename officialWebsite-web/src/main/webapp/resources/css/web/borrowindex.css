@@ -8,13 +8,13 @@
     width:1180px;
     min-height:580px;
     background: #fff;
-    margin-right: 240px;
+    margin-right: 80px;
     margin-top:30px;
     float:right;
 }
 
 .credit_main .credit-bottom{
-   margin-top:50px;
+    margin-top:50px;
     text-align: center;
     height: 305px;
 }
@@ -105,7 +105,7 @@
     margin-left:140px;  
 }
 .credit_main .borrow_index{
-    margin: 0 auto;
+    margin-left:100px;
     width: 92%;
     height: 580px;
     padding-top: 60px;

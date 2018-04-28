@@ -8,7 +8,7 @@
     width:1180px;
     min-height:580px;
     background: #fff;
-    margin-right: 240px;
+    margin-right: 80px;
     margin-top:30px;
     float:right;
 }
@@ -62,7 +62,7 @@
     padding-top: 60px;
 }
  dl dd{
-    padding-left:200px;
+    padding-left:300px;
     font-size:14px;
     height:60px;
     line-height:60px;
