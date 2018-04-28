@@ -15,5 +15,9 @@ import com.rongdu.ow.core.module.domain.ClUserBaseInfo;
  * 未经授权不得进行修改、复制、出售及商业使用
  */
 public interface ClUserBaseInfoService extends BaseService<ClUserBaseInfo, Long>{
-
+	/**
+	 * 根据userId更新基本信息
+	 * @param baseIfo
+	 */
+    public int updateByUserId(ClUserBaseInfo baseIfo);
 }

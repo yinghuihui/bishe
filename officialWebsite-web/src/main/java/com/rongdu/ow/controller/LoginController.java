@@ -13,6 +13,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.rongdu.ow.controller.base.BaseController;
@@ -20,6 +21,8 @@ import com.rongdu.ow.core.common.context.Constant;
 import com.rongdu.ow.core.common.context.Global;
 import com.rongdu.ow.core.common.util.ServletUtils;
 import com.rongdu.ow.core.common.util.StringUtil;
+import com.rongdu.ow.core.module.domain.ClUser;
+import com.rongdu.ow.core.module.mapper.ClUserMapper;
 import com.rongdu.ow.core.module.service.ClUserService;
 @Controller
 @Scope("prototype")
@@ -123,22 +126,23 @@ public class LoginController extends BaseController{
 //
 //}
 	@RequestMapping(value = "/module/user/login.htm", method = RequestMethod.POST)
-	public void login(HttpServletRequest request) {
+	public void login(HttpServletRequest request,@RequestParam(value = "loginName", required = true) String loginName,
+	@RequestParam(value = "pwd", required = true) String pwd) {
 		Map<String,Object> result = new HashMap<String, Object>();
-//		result = userService.pcRegisterUser(request, mobile,
-//				password.toUpperCase(), code, "", "","",
-//				"", "pc", "","pc");
-		request.getSession().setAttribute("user", "yinghh");
-		request.getSession().setAttribute("isborrow", 0);
-		request.getSession().setAttribute("isAuth", 0);
+//	    request.getSession().setAttribute("user", "yinghh");
+//		request.getSession().setAttribute("isborrow", 0);
+//		request.getSession().setAttribute("isAuth", 0);
+		Map<String,Object> msg = clUserService.pcUserLogin(request,loginName,pwd);
 		result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
-		result.put(Constant.RESPONSE_CODE_MSG, "登录成功!");
+		result.put(Constant.RESPONSE_CODE_MSG, msg.get("msg"));
 		ServletUtils.writeToResponse(response,result);
 	}
 	@RequestMapping(value = "/module/user/loginOut.htm", method = RequestMethod.GET)
 	public void loginOut(HttpServletRequest request) {
 		Map<String,Object> result = new HashMap<String, Object>();
 		request.getSession().removeAttribute("user"); 
+		request.getSession().removeAttribute("isborrow"); 
+		request.getSession().removeAttribute("isAuth");
 		result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 		result.put(Constant.RESPONSE_CODE_MSG, "注销成功!");
 		ServletUtils.writeToResponse(response,result);

@@ -17,7 +17,17 @@ import com.rongdu.ow.core.module.domain.ClUserBaseInfo;
  */
 @RDBatisDao
 public interface ClUserBaseInfoMapper extends BaseMapper<ClUserBaseInfo, Long> {
-
-    
+    /**
+     * 根据userId查询用户详细信息
+     * @param userId
+     * @return
+     */
+	ClUserBaseInfo findByUserId(long userId);
+	/**
+	 * 根据userId更新基本信息
+	 * @param clUserBaseInfo
+	 * @return
+	 */
+	int updateByUserId(ClUserBaseInfo clUserBaseInfo);
 
 }

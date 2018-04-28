@@ -18,5 +18,21 @@ import com.rongdu.ow.core.module.domain.ClUser;
  * 未经授权不得进行修改、复制、出售及商业使用
  */
 public interface ClUserService extends BaseService<ClUser, Long>{
+	/**
+	 * 注册
+	 * @param request
+	 * @param phone
+	 * @param pwd
+	 * @param vcode
+	 * @return
+	 */
 	 Map pcRegisterUser(HttpServletRequest request, String phone, String pwd, String vcode);
+	 /**
+	  * 登陆
+	  * @param request
+	  * @param loginName
+	  * @param pwd
+	  * @return
+	  */
+	 Map pcUserLogin(HttpServletRequest request, String loginName, String pwd);
 }

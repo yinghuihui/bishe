@@ -214,4 +214,71 @@
         <include refid="searchBy"/>
     </select>
     
+     <select id="findByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_base_info
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <update id="updateByUserId"  parameterType="com.rongdu.ow.core.module.domain.ClUserBaseInfo">
+        update cl_user_base_info
+          <set>
+            <if test="phone != null and phone != '' ">        
+                phone = #{phone,jdbcType=VARCHAR},                
+            </if>
+            <if test="realName != null and realName != '' ">        
+                real_name = #{realName,jdbcType=VARCHAR},                
+            </if>
+            <if test="age != null and age != '' ">        
+                age = #{age,jdbcType=INTEGER},                
+            </if>
+            <if test="sex != null and sex != '' ">        
+                sex = #{sex,jdbcType=VARCHAR},                
+            </if>
+            <if test="idNo != null and idNo != '' ">        
+                id_no = #{idNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="idAddr != null and idAddr != '' ">        
+                id_addr = #{idAddr,jdbcType=VARCHAR},                
+            </if>
+            <if test="livingImg != null and livingImg != '' ">        
+                living_img = #{livingImg,jdbcType=VARCHAR},                
+            </if>
+            <if test="ocrImg != null and ocrImg != '' ">        
+                ocr_img = #{ocrImg,jdbcType=VARCHAR},                
+            </if>
+            <if test="frontImg != null and frontImg != '' ">        
+                front_img = #{frontImg,jdbcType=VARCHAR},                
+            </if>
+            <if test="backImg != null and backImg != '' ">        
+                back_img = #{backImg,jdbcType=VARCHAR},                
+            </if>
+            <if test="education != null and education != '' ">        
+                education = #{education,jdbcType=VARCHAR},                
+            </if>
+            <if test="companyName != null and companyName != '' ">        
+                company_name = #{companyName,jdbcType=VARCHAR},                
+            </if>
+            <if test="companyPhone != null and companyPhone != '' ">        
+                company_phone = #{companyPhone,jdbcType=VARCHAR},                
+            </if>
+            <if test="companyAddr != null and companyAddr != '' ">        
+                company_addr = #{companyAddr,jdbcType=VARCHAR},                
+            </if>
+            <if test="companyDetailAddr != null and companyDetailAddr != '' ">        
+                company_detail_addr = #{companyDetailAddr,jdbcType=VARCHAR},                
+            </if>
+            <if test="liveAddr != null and liveAddr != '' ">        
+                live_addr = #{liveAddr,jdbcType=VARCHAR},                
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where user_id = #{userId ,jdbcType=INTEGER}
+    </update>
+    
 </mapper>

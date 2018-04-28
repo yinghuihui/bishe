@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
     <title>袋鼠钱包</title>
     <link type="image/x-icon" rel="shortcut icon" href="/resources/img/favicon16.ico" />
     <script type="text/javascript" src="/resources/js/sea.js"></script>
@@ -33,9 +33,9 @@
              <li id="3" ">工作信息&nbsp;&nbsp;<span class ="state">(认证中)</span></li>
            </ul>
            <div class = "person_inform">
-               <form  id="person_1" method="post">
+               <form  id="person_1">
             <dl>
-                <dd class = "id_no_pic">
+               <dd class = "id_no_pic">
                 <span>身份证正反面</span>
                     <img id="front_pic" src="/resources/img/home/business-bg.png" >
                     <input id="front_upload" name="frontFile" accept="image" type="file" style="display: none"/>
@@ -78,7 +78,7 @@
                 </dd>
                 
                
-                <dd style="height:50px;line-height:50px;margin-bottom:3px;"><input type="submit" class="enter" value="保存认证"></dd>
+                <dd style="height:50px;line-height:50px;margin-bottom:3px;"><input type="button" id="person_submit" class="enter" value="保存认证"></dd>
             </dl>
             </form>
            </div>

@@ -17,7 +17,11 @@ import com.rongdu.ow.core.module.domain.ClUserAuth;
  */
 @RDBatisDao
 public interface ClUserAuthMapper extends BaseMapper<ClUserAuth, Long> {
-
-    
+    /**
+     * 根据userId查询认证信息
+     * @param userId
+     * @return
+     */
+	ClUserAuth findByUserId(long userId);
 
 }

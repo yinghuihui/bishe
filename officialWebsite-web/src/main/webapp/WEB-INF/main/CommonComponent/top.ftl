@@ -19,9 +19,14 @@
 			            </span>	 -->
         </div>
         <div id="user">
-        <#if Session.user?exists>  
+        <#if Session.isAuth?exists>  
 
-           <span class = "login-name">欢迎用户，${Session.user}</span><span>&nbsp;|</span>  <a class = "login-out" href="javascript:void(0)">注销</a>   
+           <span class = "login-name">
+           <#if Session.loginName?exists>欢迎新用户
+           <#else>
+           欢迎用户，${Session.user}
+           </#if>
+           </span><span>&nbsp;|</span>  <a class = "login-out" href="javascript:void(0)">注销</a>   
 
        <#else> 
              <span>
@@ -36,11 +41,11 @@
             <form>
                 <div class="login-input-box">
                     <span class="icon icon-user"></span>
-                    <input type="text" placeholder="账号">
+                    <input class="user_login_name" type="text" placeholder="账号">
                 </div>
                 <div class="login-input-box">
                     <span class="icon icon-password"></span>
-                    <input type="password" placeholder="密码">
+                    <input class="user_login_pwd" type="password" placeholder="密码">
                 </div>
             </form>
             <div class="remember-box">

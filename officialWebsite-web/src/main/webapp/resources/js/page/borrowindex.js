@@ -63,11 +63,12 @@
    //跳转到确认借款
  $(".borrowenter").click(function () {
    var isborr = $("#isborrow").val()
-   var usero =  $("#usersession").val();
-   var isauth =  $("#isauth").val();
+   var loginphone =  $("#login_phone").val()
+   console.info(loginphone)
+   var isauth =  $("#isauth").val()
    //判断是否登录
-  if(usero==null||usero==undefined||usero==""){
-     window.location.href = "/modules/web/User/register.htm";
+  if(loginphone==null||loginphone==undefined||loginphone==""){
+     window.location.href = "/modules/web/User/register.htm"
     //判断是否已借款
   }else if(isauth=="0"||isauth==0){
      window.location.href = "/modules/web/User/credit.htm"

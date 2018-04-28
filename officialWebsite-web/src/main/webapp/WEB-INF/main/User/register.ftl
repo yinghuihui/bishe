@@ -29,7 +29,7 @@
         <input type="hidden" id="subflag" value=${registerIp}/>
         <input type="hidden" id="submit" value="${registerIp}/modules/user/pcRegister.htm"/>
         <div class="zhuce_1">
-            <form  id="zhuce_1" method="post">
+            <form  id="zhuce_1" method="post" >
             <dl>
                 
                 <dd>

@@ -268,7 +268,39 @@ var addClick = function () {
 
         })
     })
+//个人信息的提交按钮
+$("#person_submit").click(function () {
+    var data = {};
+    //data.frontPic=$("#front_upload").files[0]
+   // data.obversePic=$("#obverse_upload").files[0]
+    var formData =new FormData();
+    formData.append("frontPic",$("#front_upload")[0].files[0])
+    formData.append("obversePic",$("#obverse_upload")[0].files[0])
+    formData.append("name",$("#realname").val())
+    formData.append("idNo",$("#idno").val())
+    formData.append("degree",$(".degree option:selected").val())
+    formData.append("address",$("#addres").val())
+    console.info(formData);
+    $.ajax({
+        url:"/modules/user/userbaseinfo/save.htm",
+        type: "post",
+        contentType: "multipart/form-data",
+        data:formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (result) {
+          if(result.code==200){
+              alert(result.msg)
+          }
+        }
 
+
+    })
+
+
+})
 
 
     });

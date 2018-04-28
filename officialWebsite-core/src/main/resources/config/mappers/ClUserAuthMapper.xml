@@ -134,4 +134,11 @@
         <include refid="searchBy"/>
     </select>
     
+    <select id="findByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_auth
+        where user_id = #{userId}
+    </select>
+    
 </mapper>

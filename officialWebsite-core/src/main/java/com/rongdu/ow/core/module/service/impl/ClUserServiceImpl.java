@@ -181,5 +181,28 @@ public class ClUserServiceImpl extends BaseServiceImpl<ClUser, Long> implements 
             return ret;
         }
     }
-	
+	@Override
+	public Map pcUserLogin(HttpServletRequest request, String loginName, String pwd){
+		Map<String,Object> ret = new HashMap<>();
+		Map<String,Object> searchMap = new HashMap<>();
+		searchMap.put("loginName", loginName);
+		ClUser  clUser = clUserMapper.findSelective(searchMap);
+		if(clUser == null){
+			ret.put("msg", "用户不存在");
+		} else {
+		  if(clUser.getLoginPwd().equals(pwd)){
+			  ClUserBaseInfo clUserBaseInfo = clUserBaseInfoMapper.findByUserId(clUser.getId());
+			  request.getSession().setAttribute("user", clUserBaseInfo.getRealName());
+			  request.getSession().setAttribute("isborrow", 0);
+			  request.getSession().setAttribute("isAuth", 0);
+			  request.getSession().setAttribute("loginName", loginName);
+			  request.getSession().setAttribute("userId",clUser.getId());
+			  ret.put("msg", "登陆成功");
+		  } else {
+			  ret.put("msg", "密码错误");
+		  }
+		}
+		
+		return ret;
+	}
 }
