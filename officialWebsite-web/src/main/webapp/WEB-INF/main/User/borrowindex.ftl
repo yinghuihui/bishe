@@ -37,24 +37,24 @@
                    
                 <dd>
                     <span>总额度</span>
-                    <span  id="total"  name="total">5000</span>
+                    <span  id="total"  name="total" ></span>
                     <p class="msg_tip">
                     </p>
                 </dd>
                  <dd>
                     <span>可用额度</span>
-                    <span  id="total"  name="unuse">5000</span>
+                    <span  id="unuse"  name="unuse" ></span>
                     <p class="msg_tip">
                     </p>
                 </dd>
                  <dd>
                     <span>选择借款金额</span>
-                    <select class="amount" name ="amount">
-                    <option value ="100" >100</option>
-                    <option value ="200" >200</option>
-                    <option value ="300">300</option>
-                    <option value="400">400</option>
-                    <option value="500">500</option>
+                    <select class="creditList" name ="amount">
+                   <!--  <option value ="1000" >1000</option>
+                    <option value ="2000" >2000</option>
+                    <option value ="3000">3000</option>
+                    <option value="4000">4000</option>
+                    <option value="5000">5000</option>-->
                     </select> (元)
                 </dd>
                   <dd>
@@ -69,10 +69,10 @@
                  <dd>
                     <span>还款期限</span>
                     <select class="timelimit" name ="timelimit">
-                    <option value ="7" >7</option>
-                    <option value ="14" >14</option>
-                    <option value ="28">28</option>
-                    <option value="30">30</option>
+                   <!-- <option value ="117" >7</option>
+                    <option value ="1114" >14</option>
+                    <option value ="1128">28</option>
+                    <option value="1130">30</option>-->
                     </select> （天）
                 </dd>
                 <dd class= "amount_z">
@@ -80,8 +80,8 @@
                     <span class="repayamountz">还款金额(元)</span>
                 </dd>
                 <dd>
-                    <span class="realamount">5000</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span class="repayamount">5500</span>
+                    <span class="realamount"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="repayamount"></span>
                 </dd>
                 <dd style="height:50px;line-height:50px;margin-bottom:3px;"><input type="button" class="borrowenter" value="我要借款"></dd>
             </dl>
@@ -93,7 +93,7 @@
                 <a href=javascript:void(0) class="return">返回</a>
                 <dd>
                     <span>借款金额</span>
-                   <input id="amount"  name="camount" type="text"  disabled="disabled" value="5000">元
+                   <input id="camount"  name="camount" type="text"  disabled="disabled" value="5000">元
                     
                 </dd>
                  <dd>
@@ -111,6 +111,7 @@
                    <input id="crealamount"  name="crealamount" type="text"  disabled="disabled" value="5000">元
                     
                 </dd>
+                <input id="ccardId"  name="ccardId" type="hidden"   value="11">
                 <dd>
                     <span>到账银行</span>
                    <input id="cbank"  name="cbank" type="text"  disabled="disabled" value="中国银行">
@@ -126,11 +127,11 @@
                    <input  id="crepayamount"  name="crepayamount" type="text"  disabled="disabled"  value="5520">
                     
                 </dd>
-                <dd>
+            <!-- <dd>
                     <span>所在城市</span>
                    <input  id="caddress"  name="caddress" type="text"  disabled="disabled" value="杭州市">
                     
-                </dd>
+                </dd>  -->
                 <dd style="height:50px;line-height:50px;margin-bottom:3px;"><input type="button" class="confirmenter" value="确认借款"></dd>
             </dl>
             </form>

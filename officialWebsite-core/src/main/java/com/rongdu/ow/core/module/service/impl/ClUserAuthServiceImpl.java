@@ -1,5 +1,7 @@
 package com.rongdu.ow.core.module.service.impl;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -37,6 +39,10 @@ public class ClUserAuthServiceImpl extends BaseServiceImpl<ClUserAuth, Long> imp
 	@Override
 	public BaseMapper<ClUserAuth, Long> getMapper() {
 		return clUserAuthMapper;
+	}
+	@Override
+	public int updateStateByUserId(Map<String,Object> paramMap){
+		return clUserAuthMapper.updateStateByUserId(paramMap);
 	}
 	
 }

@@ -101,5 +101,22 @@
         from cl_bank_card
         <include refid="searchBy"/>
     </select>
-    
+       <update id="updateByuserId"  parameterType="com.rongdu.ow.core.module.domain.ClBankCard">
+        update cl_bank_card
+          <set>
+            <if test="bank != null and bank != '' ">        
+                bank = #{bank,jdbcType=VARCHAR},                
+            </if>
+            <if test="cardNo != null and cardNo != '' ">        
+                card_no = #{cardNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="phone != null and phone != '' ">        
+                phone = #{phone,jdbcType=VARCHAR},                
+            </if>
+            <if test="bindTime != null">
+                bind_time = #{bindTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where user_id = #{userId ,jdbcType=INTEGER}
+    </update>
 </mapper>

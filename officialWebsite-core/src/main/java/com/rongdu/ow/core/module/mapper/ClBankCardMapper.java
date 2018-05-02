@@ -16,7 +16,12 @@ import com.rongdu.ow.core.module.domain.ClBankCard;
  */
 @RDBatisDao
 public interface ClBankCardMapper extends BaseMapper<ClBankCard, Long> {
-
+	/**
+	 * 根据userId更新银行卡信息
+	 * @param clBankCard
+	 * @return
+	 */
+	int  updateByuserId(ClBankCard clBankCard);
     
 
 }

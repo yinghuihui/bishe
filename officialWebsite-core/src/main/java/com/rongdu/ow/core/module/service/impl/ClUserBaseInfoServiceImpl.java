@@ -1,6 +1,9 @@
 package com.rongdu.ow.core.module.service.impl;
 
 import java.text.ParseException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -8,11 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.jcraft.jsch.UserAuth;
 import com.rongdu.ow.core.common.mapper.BaseMapper;
 import com.rongdu.ow.core.common.service.impl.BaseServiceImpl;
 import com.rongdu.ow.core.common.util.StringUtil;
+import com.rongdu.ow.core.module.domain.ClUserAuth;
 import com.rongdu.ow.core.module.domain.ClUserBaseInfo;
+import com.rongdu.ow.core.module.mapper.ClUserAuthMapper;
 import com.rongdu.ow.core.module.mapper.ClUserBaseInfoMapper;
+import com.rongdu.ow.core.module.model.UserAuthModel;
 import com.rongdu.ow.core.module.service.ClUserBaseInfoService;
 
 
@@ -34,6 +41,9 @@ public class ClUserBaseInfoServiceImpl extends BaseServiceImpl<ClUserBaseInfo, L
    
     @Resource
     private ClUserBaseInfoMapper clUserBaseInfoMapper;
+    @Resource
+    private ClUserAuthMapper clUserAuthMapper;
+    
 
 	@Override
 	public BaseMapper<ClUserBaseInfo, Long> getMapper() {
@@ -41,6 +51,7 @@ public class ClUserBaseInfoServiceImpl extends BaseServiceImpl<ClUserBaseInfo, L
 	}
 	@Override
 	public int updateByUserId(ClUserBaseInfo clUserBaseInfo){
+		int code = 0;
 		try {
 			Integer age = StringUtil.getAge(clUserBaseInfo.getIdNo());
 			clUserBaseInfo.setAge(age);
@@ -50,7 +61,28 @@ public class ClUserBaseInfoServiceImpl extends BaseServiceImpl<ClUserBaseInfo, L
 		}
 		String sex = StringUtil.getSex(clUserBaseInfo.getIdNo());
 		clUserBaseInfo.setSex(sex);
-		return clUserBaseInfoMapper.updateByUserId(clUserBaseInfo);
+		int result = clUserBaseInfoMapper.updateByUserId(clUserBaseInfo);
+		if(result >0){
+			Map<String,Object> paramMap = new HashMap<>();
+			paramMap.put("userId", clUserBaseInfo.getUserId());
+			paramMap.put("idState", UserAuthModel.IS_AUTHED);
+			paramMap.put("idTime",new Date());
+			code = clUserAuthMapper.updateStateByUserId(paramMap);
+		}
+		return code;
+	}
+	@Override
+	public int updateworkByUserId(ClUserBaseInfo clUserBaseInfo){
+		int code = 0;
+		int i = clUserBaseInfoMapper.updateByUserId(clUserBaseInfo);
+		if(i >0){
+			Map<String,Object> paramMap = new HashMap<>();
+			paramMap.put("userId", clUserBaseInfo.getUserId());
+			paramMap.put("workInfoState", UserAuthModel.IS_AUTHED);
+			paramMap.put("workInfoTime",new Date());
+			code = clUserAuthMapper.updateStateByUserId(paramMap);
+		}
+		return code;
 	}
 	
 }

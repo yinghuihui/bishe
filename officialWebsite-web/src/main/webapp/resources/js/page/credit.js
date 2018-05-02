@@ -184,27 +184,35 @@ var addClick = function () {
         require.async(['../module/jquery-validation-1.13.0/additional-methods', '/resources/js/module/layer/skin/default/layer.css', '/resources/js/module/layer/layer.min'], function () {
             $("#bank_1").validate({
                 rules: {
-                     name: {
+                     cname: {
                         required: true
+                    },
+                    cardPhone: {
+                        required: true,
+                        isMobile: true
                     },
                       bankname: {
                         required: true
                     },
                      carNo: {
-                        required: true,
-                        bankaccountNL: true
+                        required: true
+                        //bankaccountNL: true
                     }
                 },
                 messages: {
-                       name: {
-                        required: "请输入真实姓名"
+                    cname: {
+                      required: "请输入真实姓名"
                     },
-                    degree: {
+                    cardPhone: {
+                        required: "请填写绑定手机号",
+                        isMobile: "手机号码格式错误"
+                    },
+                    bankname: {
                         required: "请选择银行"
                     },
                      carNo: {
-                        required: "请输入银行卡号",
-                        bankaccountNL: "银行卡格式错误"
+                        required: "请输入银行卡号"
+                        //bankaccountNL: "银行卡格式错误"
                     }
                 },
                 errorPlacement: function (error, element) {
@@ -299,8 +307,71 @@ $("#person_submit").click(function () {
 
     })
 
+})
+
+//银行卡的提交按钮
+$("#bank_submit").click(function () {
+    var cname = $("#cname").val()
+    var cardPhone = $("#cardPhone").val()
+    var bankname = $(".bank_name option:selected").val()
+    var carNo = $("#carno").val()
+    var data = {"cname":cname,"cardPhone":cardPhone,"bankname":bankname,"carNo":carNo};
+    console.info(data)
+    $.ajax({
+        url:"/modules/user/bankcard/save.htm",
+        type: "post",
+        data:data,
+        cache: false,
+        dataType: "json",
+        success: function (result) {
+          if(result.code==200){
+              alert(result.msg)
+          }
+        }
+
+
+    })
+
 
 })
 
 
-    });
+//银行卡的提交按钮
+$("#work_submit").click(function () {
+    var companyName = $("#companyname").val()
+    var companyPhone = $("#companyphone").val()
+    var companyPlace = $("#companyplace").val()
+    var data = {"companyName":companyName,"companyPhone":companyPhone,"companyPlace":companyPlace};
+    console.info(data)
+    $.ajax({
+        url:"/modules/user/workinfo/save.htm",
+        type: "post",
+        data:data,
+        cache: false,
+        dataType: "json",
+        success: function (result) {
+          if(result.code==200){
+              alert(result.msg)
+          }
+        }
+
+
+    })
+
+
+})
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+});

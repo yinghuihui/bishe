@@ -141,4 +141,55 @@
         where user_id = #{userId}
     </select>
     
+     <update id="updateStateByUserId"  parameterType="java.util.HashMap">
+        update cl_user_auth
+          <set>
+            <if test="idState != null and idState != '' ">        
+                id_state = #{idState,jdbcType=VARCHAR},                
+            </if>
+            <if test="idTime != null">
+                id_time = #{idTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="bankCardState != null and bankCardState != '' ">        
+                bank_card_state = #{bankCardState,jdbcType=VARCHAR},                
+            </if>
+            <if test="bankCardTime != null">
+                bank_card_time = #{bankCardTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="phoneState != null and phoneState != '' ">        
+                phone_state = #{phoneState,jdbcType=VARCHAR},                
+            </if>
+            <if test="phoneTime != null">
+                phone_time = #{phoneTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="workInfoState != null and workInfoState != '' ">        
+                work_info_state = #{workInfoState,jdbcType=VARCHAR},                
+            </if>
+            <if test="workInfoTime != null">
+                work_info_time = #{workInfoTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where user_id = #{userId ,jdbcType=INTEGER}
+    </update>
+    
+     <select id="getRequiredAuthState" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+    	SELECT
+			(
+				IF (id_state = 30, 1, 0) +
+				IF (bank_card_state = 30, 1, 0) +
+				IF (phone_state = 30, 1, 0) +
+				IF (work_info_state = 30, 1, 0)
+			) AS result,
+			#{total,jdbcType=INTEGER} AS total,
+		IF ((
+				IF (id_state = 30, 1, 0) +
+				IF (bank_card_state = 30, 1, 0) +
+				IF (phone_state = 30, 1, 0) +
+				IF (work_info_state = 30, 1, 0)
+			) = 3,1,0) AS qualified
+		FROM
+			cl_user_auth
+		WHERE
+			user_id = #{userId}
+    </select>
 </mapper>

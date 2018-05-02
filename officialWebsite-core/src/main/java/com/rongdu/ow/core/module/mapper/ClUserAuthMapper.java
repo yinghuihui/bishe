@@ -1,6 +1,8 @@
 package com.rongdu.ow.core.module.mapper;
 
 
+import java.util.Map;
+
 import com.rongdu.ow.core.common.mapper.BaseMapper;
 import com.rongdu.ow.core.common.mapper.RDBatisDao;
 import com.rongdu.ow.core.module.domain.ClUserAuth;
@@ -23,5 +25,18 @@ public interface ClUserAuthMapper extends BaseMapper<ClUserAuth, Long> {
      * @return
      */
 	ClUserAuth findByUserId(long userId);
+	/**
+	 * 根据userId更新认证信息
+	 * @param paramMap
+	 * @return
+	 */
+	int updateStateByUserId(Map<String,Object> paramMap);
+	
+	/**
+	 * 查询认证状态是否全部已认证
+	 * @param paramMap
+	 * @return
+	 */
+	Map<String,Object> getRequiredAuthState(Map<String,Object> paramMap); 
 
 }

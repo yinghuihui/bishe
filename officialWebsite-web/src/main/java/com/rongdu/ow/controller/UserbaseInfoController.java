@@ -1,4 +1,4 @@
-package com.rongdu.ow;
+package com.rongdu.ow.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,6 +59,7 @@ public class UserbaseInfoController {
 		baseInfo.setLiveAddr(address);
 		int result = clUserBaseInfoService.updateByUserId(baseInfo);
 		if (result > 0) {
+			request.getSession().setAttribute("user", name);
 			resultMap.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 			resultMap.put(Constant.RESPONSE_CODE_MSG, "保存成功");
 		} else {

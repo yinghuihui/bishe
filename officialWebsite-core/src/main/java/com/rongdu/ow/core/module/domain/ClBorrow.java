@@ -293,5 +293,13 @@ import java.util.Date;
     public void setBorrowUse(String borrowUse){
         this.borrowUse = borrowUse;
     }
+    public ClBorrow(Long userId,String amount,String borrowUse,String timeLimit,String realAmount,String cardId){
+    	this.userId = userId;
+    	this.amount = Double.parseDouble(amount);
+    	this.borrowUse = borrowUse;
+    	this.timeLimit = timeLimit;
+    	this.realAmount = Double.parseDouble(realAmount);
+    	this.cardId = Long.parseLong(cardId);
+    }
 
 }

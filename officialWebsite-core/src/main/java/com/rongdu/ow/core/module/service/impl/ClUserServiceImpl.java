@@ -97,7 +97,7 @@ public class ClUserServiceImpl extends BaseServiceImpl<ClUser, Long> implements 
 //                return ret;
 //            }
             Map<String,Object> userMap = new HashMap<String, Object>();
-            userMap.put("phone", phone);
+            userMap.put("loginName", phone);
             ClUser user = clUserMapper.findSelective(userMap);
             if (user != null) {
                 Map ret = new LinkedHashMap();
@@ -111,7 +111,9 @@ public class ClUserServiceImpl extends BaseServiceImpl<ClUser, Long> implements 
             newUser.setLoginName(phone);
             newUser.setLoginPwd(pwd);
             newUser.setRegistTime(new Date());
-            long userId = clUserMapper.save(newUser);
+            long userIdjia = clUserMapper.save(newUser);
+            long userId = newUser.getId();
+            logger.info("userId"+userId);
 //            String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 //            long userId = dbService.insert(SqlUtil.buildInsertSqlMap("cl_user", new Object[][]{
 //                {"login_name", phone},
@@ -138,6 +140,7 @@ public class ClUserServiceImpl extends BaseServiceImpl<ClUser, Long> implements 
             ClCredit clcredit = new ClCredit();
             clcredit.setUserId(userId);
             clcredit.setState("10");
+            clcredit.setUsed(Double.valueOf(0));
             clcredit.setUnuse(Double.parseDouble((Global.getValue("init_credit"))));
             clcredit.setTotal(Double.parseDouble((Global.getValue("init_credit"))));
             clcredit.setUpdateTime(new Date());
@@ -191,10 +194,15 @@ public class ClUserServiceImpl extends BaseServiceImpl<ClUser, Long> implements 
 			ret.put("msg", "用户不存在");
 		} else {
 		  if(clUser.getLoginPwd().equals(pwd)){
+			  Map<String,Object> paramMap = new HashMap<>();
 			  ClUserBaseInfo clUserBaseInfo = clUserBaseInfoMapper.findByUserId(clUser.getId());
+			  paramMap.put("userId", clUserBaseInfo.getUserId());
+			  paramMap.put("total", 4);
+			  Map<String,Object> authMap = clUserAuthMapper.getRequiredAuthState(paramMap);
 			  request.getSession().setAttribute("user", clUserBaseInfo.getRealName());
 			  request.getSession().setAttribute("isborrow", 0);
-			  request.getSession().setAttribute("isAuth", 0);
+			  logger.info("认证状态"+authMap.get("qualified"));
+			  request.getSession().setAttribute("isAuth", authMap.get("qualified"));
 			  request.getSession().setAttribute("loginName", loginName);
 			  request.getSession().setAttribute("userId",clUser.getId());
 			  ret.put("msg", "登陆成功");

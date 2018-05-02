@@ -20,4 +20,9 @@ public interface ClUserBaseInfoService extends BaseService<ClUserBaseInfo, Long>
 	 * @param baseIfo
 	 */
     public int updateByUserId(ClUserBaseInfo baseIfo);
+    /**
+	 * 根据userId更新工作基本信息
+	 * @param baseIfo
+	 */
+    int updateworkByUserId(ClUserBaseInfo baseIfo);
 }

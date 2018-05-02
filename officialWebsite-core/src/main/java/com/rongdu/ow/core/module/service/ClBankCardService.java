@@ -1,6 +1,8 @@
 package com.rongdu.ow.core.module.service;
 
 
+import java.util.Map;
+
 import com.rongdu.ow.core.common.service.BaseService;
 import com.rongdu.ow.core.module.domain.ClBankCard;
 
@@ -15,5 +17,16 @@ import com.rongdu.ow.core.module.domain.ClBankCard;
  * 未经授权不得进行修改、复制、出售及商业使用
  */
 public interface ClBankCardService extends BaseService<ClBankCard, Long>{
-
+	/**
+	 * 银行卡信息，持卡人姓名
+	 * @param clBankCard
+	 * @param cardUserName
+	 */
+	int bankCardSave(ClBankCard clBankCard,String cardUserName);
+	/**
+	 * 根据参数查询银行卡信息
+	 * @param paramMap
+	 * @return
+	 */
+	ClBankCard findSelective(Map<String,Object> paramMap);
 }

@@ -83,12 +83,18 @@
             </form>
            </div>
             <div class = "bank_card">
-               <form  id="bank_1" method="post">
+               <form  id="bank_1">
             <dl>
                 
                 <dd>
                     <span>持卡人</span>
-                    <input placeholder="输入持卡人姓名" id="name"  name="name" type="text">
+                    <input placeholder="输入持卡人姓名" id="cname"  name="cname" type="text">
+                    <p class="msg_tip">
+                    </p>
+                </dd>
+                <dd>
+                    <span>绑定手机号</span>
+                    <input placeholder="输入持卡人的手机号" id="cardPhone"  name="cardPhone" type="text">
                     <p class="msg_tip">
                     </p>
                 </dd>
@@ -110,7 +116,7 @@
                 </dd>
                 
                
-                <dd style="height:50px;line-height:50px;margin-bottom:3px;"><input type="submit" class="enter" value="保存认证"></dd>
+                <dd style="height:50px;line-height:50px;margin-bottom:3px;"><input type="button" id="bank_submit" class="enter" value="保存认证"></dd>
             </dl>
             </form>
            </div>
@@ -137,7 +143,7 @@
                     </p>
                 </dd>
                
-                <dd style="height:50px;line-height:50px;margin-bottom:3px;"><input type="submit" class="enter" value="保存认证"></dd>
+                <dd style="height:50px;line-height:50px;margin-bottom:3px;"><input type="button" id="work_submit" class="enter" value="保存认证"></dd>
             </dl>
             </form>
            </div>

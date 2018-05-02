@@ -66,7 +66,7 @@
     </sql>
     
     
-    <insert id="save" parameterType="com.rongdu.ow.core.module.domain.ClBorrow">
+    <insert id="save" parameterType="com.rongdu.ow.core.module.domain.ClBorrow" useGeneratedKeys="true" keyProperty="id">
         insert into cl_borrow(user_id,order_no,amount,real_amount,create_time,time_limit,state,card_id,interest,remark,borrow_use)values(#{userId,jdbcType=BIGINT},#{orderNo,jdbcType=VARCHAR},#{amount,jdbcType=DECIMAL},#{realAmount,jdbcType=DECIMAL},#{createTime,jdbcType=TIMESTAMP},#{timeLimit,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},#{cardId,jdbcType=BIGINT},#{interest,jdbcType=DECIMAL},#{remark,jdbcType=VARCHAR},#{borrowUse,jdbcType=VARCHAR})
     </insert>
 

@@ -110,4 +110,11 @@
         <include refid="searchBy"/>
     </select>
     
+    <update id="updateAmount" parameterType="java.util.HashMap">
+        update cl_credit set 
+            used = used + #{used,jdbcType=DECIMAL},
+            unuse = unuse + #{unuse,jdbcType=DECIMAL} 
+        where id = #{id ,jdbcType=INTEGER} and used + #{used,jdbcType=DECIMAL} >= 0 and unuse + #{unuse,jdbcType=DECIMAL} >= 0 and total >= unuse + #{unuse,jdbcType=DECIMAL}
+    </update>
+    
 </mapper>

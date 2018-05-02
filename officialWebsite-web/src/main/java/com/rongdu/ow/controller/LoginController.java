@@ -143,6 +143,8 @@ public class LoginController extends BaseController{
 		request.getSession().removeAttribute("user"); 
 		request.getSession().removeAttribute("isborrow"); 
 		request.getSession().removeAttribute("isAuth");
+		request.getSession().removeAttribute("loginName");
+		request.getSession().removeAttribute("userId");
 		result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 		result.put(Constant.RESPONSE_CODE_MSG, "注销成功!");
 		ServletUtils.writeToResponse(response,result);

@@ -1,6 +1,8 @@
 package com.rongdu.ow.core.module.mapper;
 
 
+import java.util.Map;
+
 import com.rongdu.ow.core.common.mapper.BaseMapper;
 import com.rongdu.ow.core.common.mapper.RDBatisDao;
 import com.rongdu.ow.core.module.domain.ClCredit;
@@ -17,7 +19,10 @@ import com.rongdu.ow.core.module.domain.ClCredit;
  */
 @RDBatisDao
 public interface ClCreditMapper extends BaseMapper<ClCredit, Long> {
-
-    
+   /**
+    * 更新额度
+    * @param param
+    */
+	int updateAmount(Map<String,Object> param);
 
 }

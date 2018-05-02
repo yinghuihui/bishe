@@ -53,6 +53,8 @@ a{
    top:-20px;
 }
 #user{
+    width: 193px;
+    height: 89px;
     float:left;
     margin-left: 0px;
     overflow:hidden;

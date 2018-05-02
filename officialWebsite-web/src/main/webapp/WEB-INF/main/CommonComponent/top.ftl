@@ -19,12 +19,13 @@
 			            </span>	 -->
         </div>
         <div id="user">
-        <#if Session.isAuth?exists>  
+    <!--    <#if Session.userId?exists>  
 
            <span class = "login-name">
-           <#if Session.loginName?exists>欢迎新用户
-           <#else>
+           <#if Session.user?exists>
            欢迎用户，${Session.user}
+           <#else>
+           欢迎新用户 
            </#if>
            </span><span>&nbsp;|</span>  <a class = "login-out" href="javascript:void(0)">注销</a>   
 
@@ -35,7 +36,7 @@
             <span>
               <a class="login" href="javascript:void(0)">登录</a>
             </span>	
-      </#if>  		
+      </#if>  -->		
         </div>
         <div class = "loginForm">
             <form>
@@ -62,6 +63,8 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="tusersession" value=${Session.user}>
+    <input type="hidden" id="tuserId" value=${Session.userId}>
 </div>
 <script type="text/javascript">
     	seajs.use("/resources/js/page/home/top.js");

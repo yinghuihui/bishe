@@ -1,6 +1,8 @@
 package com.rongdu.ow.core.module.service;
 
 
+import java.util.Map;
+
 import com.rongdu.ow.core.common.service.BaseService;
 import com.rongdu.ow.core.module.domain.ClUserAuth;
 
@@ -15,5 +17,11 @@ import com.rongdu.ow.core.module.domain.ClUserAuth;
  * 未经授权不得进行修改、复制、出售及商业使用
  */
 public interface ClUserAuthService extends BaseService<ClUserAuth, Long>{
+	/**
+	 * 根据userId修改认证状态
+	 * @param paramMap
+	 * @return
+	 */
+	int updateStateByUserId(Map<String,Object> paramMap);
 
 }
