@@ -23,5 +23,11 @@ public interface ClUserAuthService extends BaseService<ClUserAuth, Long>{
 	 * @return
 	 */
 	int updateStateByUserId(Map<String,Object> paramMap);
+	/**
+	 * 根据参数查询userAuth信息
+	 * @param paramMap
+	 * @return
+	 */
+	ClUserAuth findSelective(Map<String,Object> paramMap);
 
 }

@@ -301,5 +301,8 @@ import java.util.Date;
     	this.realAmount = Double.parseDouble(realAmount);
     	this.cardId = Long.parseLong(cardId);
     }
+    public ClBorrow(){
+    	
+    }
 
 }

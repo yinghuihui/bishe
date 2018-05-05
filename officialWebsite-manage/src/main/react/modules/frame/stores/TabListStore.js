@@ -45,6 +45,9 @@ export default Reflux.createStore({
 					'ScienceWebsiteContent',
 					'StagesWebsiteColumn',
 					'StagesWebsiteContent',
+					'RiskExamine',
+					 'TimedTaskList',
+					'TimedTaskLog',
 			];
 
 			if (routeNames1.indexOf(tabId)>-1) {

@@ -44,5 +44,9 @@ public class ClUserAuthServiceImpl extends BaseServiceImpl<ClUserAuth, Long> imp
 	public int updateStateByUserId(Map<String,Object> paramMap){
 		return clUserAuthMapper.updateStateByUserId(paramMap);
 	}
+	@Override
+	public ClUserAuth findSelective(Map<String,Object> paramMap){
+		return clUserAuthMapper.findSelective(paramMap);
+	}
 	
 }

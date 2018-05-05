@@ -1,10 +1,13 @@
 package com.rongdu.ow.core.module.service;
 
 
+import java.util.List;
 import java.util.Map;
 
+import com.github.pagehelper.Page;
 import com.rongdu.ow.core.common.service.BaseService;
 import com.rongdu.ow.core.module.domain.ClBorrow;
+import com.rongdu.ow.core.module.model.ManageBorrowModel;
 
 /**
  * 借款信息表Service
@@ -60,4 +63,41 @@ public interface ClBorrowService extends BaseService<ClBorrow, Long>{
     * @return
     */
    Map<String,Object> indexRepayAmount(String amount,String timeLimit);
+   /**
+    * 返回待审核信息(状态是人工审核通过的)
+    * @param params
+    * @param currentPage
+    * @param pageSize
+    * @return
+    */
+   Page<ManageBorrowModel> listReview(Map<String,Object> params,int currentPage, int pageSize);
+   /**
+    * 返回待审核信息
+    * @param params
+    * @param currentPage
+    * @param pageSize
+    * @return
+    */
+   Page<ManageBorrowModel> listModel(Map<String,Object> params,int currentPage, int pageSize);
+   /**
+    * 人工复审
+    * @param borrowId
+    * @param state
+    * @param remark
+    * @return
+    */
+   public int manualVerifyBorrow(Long borrowId, String state, String remark);
+   /**
+    * 根据主键查找借款信息
+    * @param borrowId
+    * @return
+    */
+   ClBorrow findByPrimary(Long borrowId);
+   /**
+    * 更新 根据多条件
+    * @param params
+    * @return
+    */
+   int updateSelective(Map<String,Object> params);
+
 }

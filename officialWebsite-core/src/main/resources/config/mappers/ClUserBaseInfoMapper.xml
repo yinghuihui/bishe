@@ -26,6 +26,13 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
     
+    <resultMap id="BaseInfoModelMap" extends="BaseResultMap"  type="com.rongdu.ow.core.module.model.ManagerUserModel">
+        <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+        <result column="login_pwd" property="loginPwd" jdbcType="VARCHAR" />
+        <result column="loginpwd_modify_time" property="loginpwdModifyTime" jdbcType="TIMESTAMP" />
+        <result column="regist_time" property="registTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
     <!--基本的sql查询字段 公共引用...-->
     <sql id="Base_Column_List">
         id,user_id,phone,real_name,age,sex,id_no,id_addr,living_img,ocr_img,front_img,back_img,education,company_name,company_phone,company_addr,company_detail_addr,live_addr,update_time,create_time 
@@ -280,5 +287,14 @@
         </set>    
         where user_id = #{userId ,jdbcType=INTEGER}
     </update>
+    
+    <select id="getBaseModelByUserId" resultMap="BaseInfoModelMap" parameterType="java.lang.Long">
+        select 
+        	u.login_name,u.login_pwd,u.loginpwd_modify_time,u.regist_time,
+	        baseInfo.id,baseInfo.user_id,baseInfo.phone,baseInfo.real_name,baseInfo.age,baseInfo.sex,baseInfo.id_no,baseInfo.id_addr,baseInfo.living_img,baseInfo.ocr_img,baseInfo.front_img,baseInfo.back_img,baseInfo.education,baseInfo.company_name,baseInfo.company_phone,baseInfo.company_addr,baseInfo.company_detail_addr,baseInfo.live_addr,baseInfo.update_time,baseInfo.create_time 
+		from  cl_user u 
+		left join cl_user_base_info baseInfo on u.id = baseInfo.user_id 
+		where u.id = #{userId,jdbcType=BIGINT}  
+    </select>
     
 </mapper>

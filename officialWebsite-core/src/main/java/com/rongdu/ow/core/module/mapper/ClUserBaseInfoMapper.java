@@ -4,6 +4,7 @@ package com.rongdu.ow.core.module.mapper;
 import com.rongdu.ow.core.common.mapper.BaseMapper;
 import com.rongdu.ow.core.common.mapper.RDBatisDao;
 import com.rongdu.ow.core.module.domain.ClUserBaseInfo;
+import com.rongdu.ow.core.module.model.ManagerUserModel;
 
 /**
  * 用户详情表Dao
@@ -29,5 +30,11 @@ public interface ClUserBaseInfoMapper extends BaseMapper<ClUserBaseInfo, Long> {
 	 * @return
 	 */
 	int updateByUserId(ClUserBaseInfo clUserBaseInfo);
+	/**
+	 * 根据userId查询用户详情返回给manage用
+	 * @param userId
+	 * @return
+	 */
+	ManagerUserModel getBaseModelByUserId(Long userId);
 
 }

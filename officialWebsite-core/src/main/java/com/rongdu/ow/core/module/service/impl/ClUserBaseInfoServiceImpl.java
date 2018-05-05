@@ -19,6 +19,7 @@ import com.rongdu.ow.core.module.domain.ClUserAuth;
 import com.rongdu.ow.core.module.domain.ClUserBaseInfo;
 import com.rongdu.ow.core.module.mapper.ClUserAuthMapper;
 import com.rongdu.ow.core.module.mapper.ClUserBaseInfoMapper;
+import com.rongdu.ow.core.module.model.ManagerUserModel;
 import com.rongdu.ow.core.module.model.UserAuthModel;
 import com.rongdu.ow.core.module.service.ClUserBaseInfoService;
 
@@ -83,6 +84,9 @@ public class ClUserBaseInfoServiceImpl extends BaseServiceImpl<ClUserBaseInfo, L
 			code = clUserAuthMapper.updateStateByUserId(paramMap);
 		}
 		return code;
+	}
+	public ManagerUserModel getBaseModelByUserId(Long userId){
+		return clUserBaseInfoMapper.getBaseModelByUserId(userId);
 	}
 	
 }

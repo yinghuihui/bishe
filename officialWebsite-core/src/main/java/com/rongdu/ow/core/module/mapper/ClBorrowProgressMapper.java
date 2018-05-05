@@ -16,7 +16,11 @@ import com.rongdu.ow.core.module.domain.ClBorrowProgress;
  */
 @RDBatisDao
 public interface ClBorrowProgressMapper extends BaseMapper<ClBorrowProgress, Long> {
-
-    
+   /**
+    * 查询是否有坏账和逾期的进度
+    * @param borrowId
+    * @return
+    */
+	int isNormalBorrowProgress(Long borrowId);
 
 }

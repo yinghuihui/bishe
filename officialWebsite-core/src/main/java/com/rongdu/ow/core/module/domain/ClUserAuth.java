@@ -239,7 +239,7 @@ import java.util.Date;
     *
     * @return 其他信息认证时间
     */
-    public Date getOtherInfoTime(){
+    public Date getWorkInfoTime(){
         return workInfoTime;
     }
 
@@ -248,7 +248,7 @@ import java.util.Date;
     * 
     * @param otherInfoTime 要设置的其他信息认证时间
     */
-    public void setOtherInfoTime(Date workInfoTime){
+    public void setWorkInfoTime(Date workInfoTime){
         this.workInfoTime = workInfoTime;
     }
 

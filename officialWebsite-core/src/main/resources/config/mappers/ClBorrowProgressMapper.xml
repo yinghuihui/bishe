@@ -102,4 +102,8 @@
         <include refid="searchBy"/>
     </select>
     
+     <select id="isNormalBorrowProgress" resultType="int" parameterType="long">
+    	select count(1) from cl_borrow_progress where borrow_id=#{borrowId,jdbcType=BIGINT} and (state=50 OR state=90)
+    </select>
+    
 </mapper>

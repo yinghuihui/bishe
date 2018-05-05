@@ -222,7 +222,8 @@ public class SysConfigController extends ManageBaseController {
 			}
 		} else {
 			returnMap.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
-			returnMap.put(Constant.RESPONSE_CODE_MSG, "后台缓存刷新完成,前台缓存刷新失败");
+			//returnMap.put(Constant.RESPONSE_CODE_MSG, "后台缓存刷新完成,前台缓存刷新失败");
+			returnMap.put(Constant.RESPONSE_CODE_MSG, "后台缓存刷新完成");
 		}
 
 		// 返回给页面

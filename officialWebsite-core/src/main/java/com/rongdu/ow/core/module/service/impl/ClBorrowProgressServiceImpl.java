@@ -36,5 +36,9 @@ public class ClBorrowProgressServiceImpl extends BaseServiceImpl<ClBorrowProgres
 	public BaseMapper<ClBorrowProgress, Long> getMapper() {
 		return clBorrowProgressMapper;
 	}
+	@Override
+	public int isNormalBorrowProgress(Long borrowId){
+		return clBorrowProgressMapper.isNormalBorrowProgress(borrowId);
+	}
 	
 }

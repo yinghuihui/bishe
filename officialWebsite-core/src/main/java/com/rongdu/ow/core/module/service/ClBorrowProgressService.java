@@ -14,5 +14,10 @@ import com.rongdu.ow.core.module.domain.ClBorrowProgress;
  * 未经授权不得进行修改、复制、出售及商业使用
  */
 public interface ClBorrowProgressService extends BaseService<ClBorrowProgress, Long>{
-
+	/**
+	 * 查询是否有逾期和还账的进度
+	 * @param borrowId
+	 * @return
+	 */
+	public int isNormalBorrowProgress(Long borrowId);
 }

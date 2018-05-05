@@ -126,4 +126,44 @@
         <include refid="searchBy"/>
     </select>
     
+       <update id="updateLate" parameterType="com.rongdu.ow.core.module.domain.ClBorrowRepay">
+        update cl_borrow_repay set 
+        penalty_amout = #{penaltyAmout},                
+        penalty_day = #{penaltyDay}
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+    
+    <!-- 查询未还款借款项目 borrowState 30:放款成功  50:逾期  90:坏账 -->
+	<select id="findUnRepay" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+		select
+			repay.id,repay.user_id,repay.borrow_id,repay.amount,repay.repay_time,repay.state,repay.penalty_amout,repay.penalty_day
+		from cl_borrow_repay repay left join cl_borrow borrow on repay.`borrow_id` = borrow.id
+		where  borrow.`state` in (30,50,90) 
+		<if test="repayTime != null ">
+			and repay.repay_time &lt; #{repayTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="state != null and state != ''">
+			and repay.state = #{state,jdbcType = VARCHAR}
+		</if>
+		<if test="userId != null">
+			and repay.user_id = #{userId,jdbcType = BIGINT}
+		</if>
+	</select>
+	
+	<update id="updateParam"  parameterType="java.util.HashMap">
+        update cl_borrow_repay
+          <set> 
+            state = #{state,jdbcType=VARCHAR} , 
+            <if test="penaltyDay !=null and penaltyDay != ''">
+           		penalty_day = #{penaltyDay,jdbcType=VARCHAR},  
+            </if>
+            <if test="penaltyAmout !=null">
+            	penalty_amout = #{penaltyAmout,jdbcType=DECIMAL} , 
+            </if>
+            <if test="repayTime != null ">      
+            	repay_time = #{repayTime,jdbcType=TIMESTAMP}  
+            </if>            
+        </set>    
+        where state = '20' and id = #{id ,jdbcType=BIGINT} 
+    </update>
 </mapper>

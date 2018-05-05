@@ -135,8 +135,11 @@
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
-	<listener>
+<!-- 	<listener>
 		<listener-class>com.rongdu.ow.listener.WebConfigContextListener</listener-class>
+	</listener> -->
+	<listener>
+		<listener-class>com.rongdu.ow.listener.QuartzListener</listener-class>
 	</listener>
 	<servlet>
 		<servlet-name>springServlet</servlet-name>

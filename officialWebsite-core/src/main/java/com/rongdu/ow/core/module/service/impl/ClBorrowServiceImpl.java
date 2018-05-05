@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -13,11 +14,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.OrderUtils;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.rongdu.ow.core.common.context.Global;
 import com.rongdu.ow.core.common.exception.BussinessException;
 import com.rongdu.ow.core.common.exception.SimpleMessageException;
 import com.rongdu.ow.core.common.mapper.BaseMapper;
 import com.rongdu.ow.core.common.service.impl.BaseServiceImpl;
+import com.rongdu.ow.core.common.util.DateUtil;
 import com.rongdu.ow.core.common.util.OrderNoUtil;
 import com.rongdu.ow.core.common.util.StringUtil;
 import com.rongdu.ow.core.module.domain.ClBorrow;
@@ -27,6 +31,8 @@ import com.rongdu.ow.core.module.mapper.ClBorrowMapper;
 import com.rongdu.ow.core.module.mapper.ClBorrowProgressMapper;
 import com.rongdu.ow.core.module.mapper.ClCreditMapper;
 import com.rongdu.ow.core.module.model.ClBorrowModel;
+import com.rongdu.ow.core.module.model.ManageBorrowModel;
+import com.rongdu.ow.core.module.service.ClBorrowRepayService;
 import com.rongdu.ow.core.module.service.ClBorrowService;
 
 
@@ -52,6 +58,8 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<ClBorrow, Long> impleme
     private  ClBorrowProgressMapper  clBorrowProgressMapper;
     @Resource
     private ClCreditMapper clCreditMapper;
+    @Resource
+    private ClBorrowRepayService clBorrowRepayService;
 
 	@Override
 	public BaseMapper<ClBorrow, Long> getMapper() {
@@ -98,7 +106,7 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<ClBorrow, Long> impleme
 					+ "天，费用"
 					+ StringUtil.isNull(borrow.getInterest()) + "元，"
 					+ ClBorrowModel.convertBorrowRemark(state));
-		}if(state.equals(ClBorrowModel.STATE_AUTO_REFUSED)) {
+		}if(state.equals(ClBorrowModel.STATE_REFUSED)) {
 			borrowProgress.setRemark(remark);
 		} else {
 			borrowProgress.setRemark(ClBorrowModel.convertBorrowRemark(state));
@@ -177,6 +185,7 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<ClBorrow, Long> impleme
 	        }
 	        return credis;
 	    }
+	 @Override
 	 public Map<String,Object> indexRepayAmount(String camount,String timeLimit){
 		 Map<String,Object> map = new HashMap<>();
 		 String interestRate = Global.getValue("interest_rate");
@@ -188,5 +197,88 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<ClBorrow, Long> impleme
 		 map.put("repayamount", repayAmount);
 		 return map;
 		 
+	 }
+	 @Override
+	 public Page<ManageBorrowModel> listModel(Map<String,Object> params,int currentPage, int pageSize){
+		 PageHelper.startPage(currentPage, pageSize);
+		 List<ManageBorrowModel> list = clBorrowMapper.listModel(params);
+		 return (Page<ManageBorrowModel>) list;
+	 }
+	 @Override
+	 public Page<ManageBorrowModel> listReview(Map<String,Object> params,int currentPage, int pageSize){
+		 PageHelper.startPage(currentPage, pageSize);
+		 List<ManageBorrowModel> list = clBorrowMapper.listReview(params);
+		 return (Page<ManageBorrowModel>) list;
+	 }
+	 public int manualVerifyBorrow(Long borrowId, String state, String remark){
+		 int code = 0;
+			ClBorrow borrow = clBorrowMapper.findByPrimary(borrowId);
+			if (borrow != null) {
+				if(!borrow.getState().equals(ClBorrowModel.STATE_PRE)){
+					logger.error("人工审核失败,当前状态不是待审核");
+					throw new BussinessException("人工审核失败,当前状态不是待审核");
+				}
+				Map<String,Object> map = new HashMap<>();
+				map.put("id", borrowId);
+				map.put("state", state);
+				map.put("remark", remark);
+				map.put("preState", ClBorrowModel.STATE_PRE);
+				code = clBorrowMapper.reviewState(map);
+				if (code!=1) {
+					throw new BussinessException("人工审核失败,当前状态不是待审核");
+				}
+				savePressState(borrow, state,"");
+				if (ClBorrowModel.STATE_REFUSED.equals(state)) {
+					// 审核不通过返回信用额度
+					modifyCredit(borrow.getUserId(), borrow.getAmount(), "unuse");
+				}
+				// 人工复审成功 放款
+				if (ClBorrowModel.STATE_PASS.equals(state)) {
+					underLineLoan(borrow);
+//					if (!"10".equals(Global.getValue("manual_loan")))  { //系统配置的是否放款审核
+//						//borrowLoan(borrow, new Date());
+//						underLineLoan(borrow);
+//					}else {
+//						//到待放款审核状态	
+//						int result = modifyState(borrow.getId(), ClBorrowModel.WAIT_AUDIT_LOAN,ClBorrowModel.STATE_PASS);
+//						logger.info("人工复审通过 待放款审核状态result: "+result);
+//						if(result == 1){
+//							savePressState(borrow, ClBorrowModel.WAIT_AUDIT_LOAN,"");
+//						}
+//					}
+				}
+			} else {
+				logger.error("审核失败，当前标不存在");
+				throw new BussinessException("审核失败，当前标不存在");
+			}
+			return code;
+	 }
+	 public void  underLineLoan(ClBorrow borrow){
+			Map<String, Object> map = new HashMap<>();
+			map.put("id", borrow.getId());
+			map.put("state", ClBorrowModel.STATE_REPAY);
+			clBorrowMapper.updatePayState(map);
+
+			// 放款进度添加
+			ClBorrowProgress bp = new ClBorrowProgress();
+			bp.setUserId(borrow.getUserId());
+			bp.setBorrowId(borrow.getId());
+			bp.setState(ClBorrowModel.STATE_REPAY);
+			bp.setRemark(ClBorrowModel.convertBorrowRemark(bp.getState()));
+			bp.setCreateTime(DateUtil.getNow());
+			clBorrowProgressMapper.save(bp);
+
+			ClBorrow borrowb = clBorrowMapper.findByPrimary(borrow.getId());
+			
+			// 生成还款计划并授权
+			clBorrowRepayService.genRepayPlan(borrowb);
+		}
+	 @Override
+	 public ClBorrow findByPrimary(Long borrowId){
+		 return clBorrowMapper.findByPrimary(borrowId);
+	 }
+	 @Override
+	 public int updateSelective(Map<String,Object> params){
+		 return clBorrowMapper.updateSelective(params);
 	 }
 }

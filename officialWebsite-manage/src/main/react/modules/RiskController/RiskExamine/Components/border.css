@@ -1,0 +1,94 @@
+.headText{
+    color: #2db7f5;
+    line-height: 40px;
+    font-size: 16px;
+    text-align: center;
+}
+.special .ant-form-item > label{
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+.special .ant-input{
+    border: 0;
+    background: none;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-radius: 0px !important;
+}
+.special .row{
+    margin: 0 !important;
+}
+.special .ant-form-item{
+    margin: 0 !important;
+}
+.noText > label{
+    color: #fff !important;
+}
+.needTop{
+    border-top: 1px solid #ccc;
+}
+.special .noRight .ant-input{
+    border-right: 0;
+}
+.special .noText .ant-input{
+    border-right: 0;
+}
+.orderTitle{
+    padding: 5px 0;
+    height: 30px;
+    font-size: 16px;
+    border-top: 1px solid #ccc;
+}
+.four{
+    width: 40%;
+    float: left;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+.six{
+    width: 60%;
+    float: left;
+    border-top: 1px solid #ccc;
+}
+.ul ul li{
+    float: left;
+    list-style: none;
+    height: 30px;
+    width: 30%;
+    line-height: 30px;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+.ul ul li.noBorder{
+    border-right: 0;
+    width: 40%;
+}
+.text{
+    font-size: 14px;
+}
+.ul{
+    width: 100%;
+}
+.ul ul{
+    display: block;
+    width: 100%;
+    height: 30px;
+    overflow: hidden;
+}
+.text .title{
+    color: #2db7f5;
+}
+.clear{
+    overflow: hidden;
+}
+.text .ant-table th{
+    background: none !important;
+    border-radius: 0px;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+.text .ant-table td{
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+
+}

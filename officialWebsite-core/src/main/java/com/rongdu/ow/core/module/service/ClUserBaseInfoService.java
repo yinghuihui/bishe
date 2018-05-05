@@ -3,6 +3,7 @@ package com.rongdu.ow.core.module.service;
 
 import com.rongdu.ow.core.common.service.BaseService;
 import com.rongdu.ow.core.module.domain.ClUserBaseInfo;
+import com.rongdu.ow.core.module.model.ManagerUserModel;
 
 /**
  * 用户详情表Service
@@ -25,4 +26,10 @@ public interface ClUserBaseInfoService extends BaseService<ClUserBaseInfo, Long>
 	 * @param baseIfo
 	 */
     int updateworkByUserId(ClUserBaseInfo baseIfo);
+    /**
+     * 根据userId查询 用户详情返回给后台manage使用
+     * @param userId
+     * @return
+     */
+    public ManagerUserModel getBaseModelByUserId(Long userId);
 }
