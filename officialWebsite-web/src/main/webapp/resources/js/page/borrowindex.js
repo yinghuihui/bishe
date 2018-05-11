@@ -107,6 +107,29 @@
         })
 
     }
+    //获取借款进度数据
+ var borrowProgressData = function(){
+    $.ajax({
+        url:"/modules/user/borrow/findProgress.htm",
+        type: "post",
+        data:"",
+        cache: false,
+        dataType: "json",
+        success: function (result) {
+          if(result.code==200){
+            $("#progressList").empty()
+            $("#borderno").html(result.data.orderNo)
+            var progressList = result.data.list
+            for(var i=0;i<progressList.length;i++){
+                 $("#progressList").append("<div class ='bor_progress'><span class='state_remark'>"+progressList[i].str+"</span> <p class='bpstate'>"+progressList[i].remark+"</p><p class='bpstate'>"+progressList[i].createTime+"</p></div>")
+                 
+            }
+          }
+        }
+
+
+    })
+}
    //跳转到确认借款
  $(".borrowenter").click(function () {
    var isborr = $("#isborrow").val()
@@ -127,8 +150,10 @@
   }else {
     $(".borrow_index").css("display","none")
     $(".borrow_progress").css("display","block")
+    borrowProgressData();
   }
  });
+
  //跳转到借款进度
  $(".confirmenter").click(function () {
     var camount =$("#camount").val()
@@ -150,6 +175,7 @@
               alert(result.msg)
               $(".borrow_confirm").css("display","none");
               $(".borrow_progress").css("display","block")
+              borrowProgressData();
           }
         }
 
@@ -158,6 +184,7 @@
  });
  //跳转到借款首页
   $(".return").click(function () {
+   $(".borrow_progress").css("display","none")
    $(".borrow_confirm").css("display","none")
    $(".borrow_index").css("display","block")
  });

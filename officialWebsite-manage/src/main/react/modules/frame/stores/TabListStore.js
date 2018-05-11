@@ -48,6 +48,12 @@ export default Reflux.createStore({
 					'RiskExamine',
 					 'TimedTaskList',
 					'TimedTaskLog',
+					'OverdueList',
+					'RepaymentList',
+					'BadDebtsList',
+					'LoanList',
+					'LoanInformation',
+					'LoanSchedule',
 			];
 
 			if (routeNames1.indexOf(tabId)>-1) {

@@ -3,6 +3,7 @@ package com.rongdu.ow.core.module.service.impl;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -17,14 +18,18 @@ import com.rongdu.ow.core.common.context.Global;
 import com.rongdu.ow.core.common.mapper.BaseMapper;
 import com.rongdu.ow.core.common.service.impl.BaseServiceImpl;
 import com.rongdu.ow.core.common.util.StringUtil;
+import com.rongdu.ow.core.module.domain.ClBorrow;
 import com.rongdu.ow.core.module.domain.ClCredit;
 import com.rongdu.ow.core.module.domain.ClUser;
 import com.rongdu.ow.core.module.domain.ClUserAuth;
 import com.rongdu.ow.core.module.domain.ClUserBaseInfo;
+import com.rongdu.ow.core.module.mapper.ClBorrowMapper;
 import com.rongdu.ow.core.module.mapper.ClCreditMapper;
 import com.rongdu.ow.core.module.mapper.ClUserAuthMapper;
 import com.rongdu.ow.core.module.mapper.ClUserBaseInfoMapper;
 import com.rongdu.ow.core.module.mapper.ClUserMapper;
+import com.rongdu.ow.core.module.model.BorrowProgressModel;
+import com.rongdu.ow.core.module.model.ClBorrowModel;
 import com.rongdu.ow.core.module.service.ClUserService;
 
 
@@ -52,7 +57,8 @@ public class ClUserServiceImpl extends BaseServiceImpl<ClUser, Long> implements 
     private ClCreditMapper clCreditMapper;
     @Resource
     private ClUserAuthMapper clUserAuthMapper;
-    
+    @Resource
+    private ClBorrowMapper clBorrowMapper;
 	@Override
 	public BaseMapper<ClUser, Long> getMapper() {
 		return clUserMapper;
@@ -200,7 +206,15 @@ public class ClUserServiceImpl extends BaseServiceImpl<ClUser, Long> implements 
 			  paramMap.put("total", 4);
 			  Map<String,Object> authMap = clUserAuthMapper.getRequiredAuthState(paramMap);
 			  request.getSession().setAttribute("user", clUserBaseInfo.getRealName());
-			  request.getSession().setAttribute("isborrow", 0);
+			  Map<String,Object> params = new HashMap<>();
+			  params.put("userId", clUserBaseInfo.getUserId());
+			  ClBorrow clBorrow = clBorrowMapper.findRepayBorrow(params);
+			  if(clBorrow!= null && clBorrow.getState().equals(ClBorrowModel.STATE_FINISH)){
+				  request.getSession().setAttribute("isborrow", 1);
+			  }else {
+				  request.getSession().setAttribute("isborrow", 0);
+			  }
+			  //List<BorrowProgressModel> list = clBorrowService.borrowProgress(borrow, "detail");
 			  logger.info("认证状态"+authMap.get("qualified"));
 			  request.getSession().setAttribute("isAuth", authMap.get("qualified"));
 			  request.getSession().setAttribute("loginName", loginName);

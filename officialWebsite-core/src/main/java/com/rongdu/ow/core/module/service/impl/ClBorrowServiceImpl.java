@@ -2,6 +2,8 @@ package com.rongdu.ow.core.module.service.impl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.OrderUtils;
@@ -26,14 +29,23 @@ import com.rongdu.ow.core.common.util.OrderNoUtil;
 import com.rongdu.ow.core.common.util.StringUtil;
 import com.rongdu.ow.core.module.domain.ClBorrow;
 import com.rongdu.ow.core.module.domain.ClBorrowProgress;
+import com.rongdu.ow.core.module.domain.ClBorrowRepay;
+import com.rongdu.ow.core.module.domain.ClBorrowRepayLog;
 import com.rongdu.ow.core.module.domain.ClCredit;
+import com.rongdu.ow.core.module.domain.ClUserBaseInfo;
 import com.rongdu.ow.core.module.mapper.ClBorrowMapper;
 import com.rongdu.ow.core.module.mapper.ClBorrowProgressMapper;
+import com.rongdu.ow.core.module.mapper.ClBorrowRepayLogMapper;
+import com.rongdu.ow.core.module.mapper.ClBorrowRepayMapper;
 import com.rongdu.ow.core.module.mapper.ClCreditMapper;
+import com.rongdu.ow.core.module.mapper.ClUserBaseInfoMapper;
+import com.rongdu.ow.core.module.model.BorrowProgressModel;
 import com.rongdu.ow.core.module.model.ClBorrowModel;
 import com.rongdu.ow.core.module.model.ManageBorrowModel;
 import com.rongdu.ow.core.module.service.ClBorrowRepayService;
 import com.rongdu.ow.core.module.service.ClBorrowService;
+
+import tool.util.BigDecimalUtil;
 
 
 /**
@@ -60,6 +72,12 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<ClBorrow, Long> impleme
     private ClCreditMapper clCreditMapper;
     @Resource
     private ClBorrowRepayService clBorrowRepayService;
+    @Resource
+    private ClUserBaseInfoMapper clUserBaseInfoMapper;
+    @Resource
+    private ClBorrowRepayMapper clBorrowRepayMapper;
+    @Resource
+    private ClBorrowRepayLogMapper clBorrowRepayLogMapper;
 
 	@Override
 	public BaseMapper<ClBorrow, Long> getMapper() {
@@ -281,4 +299,419 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<ClBorrow, Long> impleme
 	 public int updateSelective(Map<String,Object> params){
 		 return clBorrowMapper.updateSelective(params);
 	 }
+	 @Override
+	 public Page<ManageBorrowModel> listBorrowModel(Map<String, Object> params, int currentPage, int pageSize) {
+			PageHelper.startPage(currentPage, pageSize);
+			List<ManageBorrowModel> list = clBorrowMapper.listBorrowModel(params);
+			return (Page<ManageBorrowModel>) list;
+		}
+	 
+	 /**
+		 * 借款详细信息
+		 */
+		@SuppressWarnings("static-access")
+		@Override
+		public ManageBorrowModel getModelByBorrowId(long borrowId) {
+			ManageBorrowModel model = new ManageBorrowModel();
+			ClBorrow borrow = clBorrowMapper.findByPrimary(borrowId);
+			if (borrow == null) {
+				logger.error("查询的借款标不存在");
+			} else {
+				model = model.instance(borrow);
+				// model.setBorrowId(borrow.getId());
+				ClUserBaseInfo userBaseInfo = clUserBaseInfoMapper.findByUserId(borrow.getUserId());
+				if (userBaseInfo != null) {
+					model.setPhone(userBaseInfo.getPhone());
+					model.setRealName(userBaseInfo.getRealName());
+				}
+
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("borrowId", borrowId);
+				paramMap.put("state", BorrowProgressModel.PROGRESS_LOAN_SUCCESS);
+				ClBorrowProgress bp = clBorrowProgressMapper.findFirst(paramMap);
+				if (bp != null) {
+					model.setLoanTime(bp.getCreateTime());
+				}
+				paramMap = new HashMap<String, Object>();
+				paramMap.put("borrowId", borrowId);
+				ClBorrowRepay borrowRepay = clBorrowRepayMapper.findSelective(paramMap);
+				if (borrowRepay != null) {
+					model.setPenaltyAmout(borrowRepay.getPenaltyAmout());
+					model.setPenaltyDay(borrowRepay.getPenaltyDay());
+					if(borrowRepay.getAmount() != null){
+						model.setRepayTotal(BigDecimalUtil.add(borrowRepay.getAmount(),borrowRepay.getPenaltyAmout()));
+					} else {
+						model.setRepayTotal(0.0);
+					}
+				}
+				paramMap = new HashMap<String, Object>();
+				paramMap.put("borrowId", borrowId);
+
+
+//				BigDecimal amount = BigDecimal.ZERO;
+//				BigDecimal repayYesTotal = BigDecimal.ZERO;
+//				List<ClBorrowRepayLog> logs = clBorrowRepayLogMapper.listSelective(paramMap);
+//				if (CollectionUtils.isNotEmpty(logs)) {
+//					for (ClBorrowRepayLog log: logs
+//							) {
+//						model.setRepayTime(DateUtil.dateStr(log.getRepayTime(),DateUtil.DATEFORMAT_STR_001));
+//						amount = amount.add(BigDecimal.valueOf(log.getAmount()));
+//						repayYesTotal = repayYesTotal.add(BigDecimal.valueOf(log.getAmount())).add(BigDecimal.valueOf(log.getPenaltyAmout()));
+//					}
+//				}
+//
+//				model.setRepayAmount(amount.doubleValue());
+//				model.setRepayYesTotal(repayYesTotal.doubleValue());
+
+				ClBorrowRepayLog borrowRepaylog = clBorrowRepayLogMapper.findSelective(paramMap);
+				if (borrowRepaylog != null) {
+					model.setRepayTime(DateUtil.dateStr(borrowRepaylog.getRepayTime(),DateUtil.DATEFORMAT_STR_001));
+					model.setRepayAmount(borrowRepaylog.getAmount());
+					if(borrowRepay.getAmount() != null){
+						model.setRepayYesTotal(borrowRepaylog.getAmount());
+					} else {
+						model.setRepayYesTotal(0.0);
+					}
+				 }
+				
+//				paramMap = new HashMap<String, Object>();
+//				paramMap.put("borrowId", borrowId);
+//				UrgeRepayOrder order=urgeRepayOrderMapper.findSelective(paramMap);
+//				if(order!=null){
+//					model.setLevel(order.getLevel());
+//				 }
+				}
+			
+			return model;
+		}
+		
+		/**
+		 * 借款进度显示
+		 * 
+		 * @param borrow
+		 * @param pageFlag
+		 *            detail代表详情页，index首页，首页不显示审核不通过和放款成功的进度，显示可以借款的信息
+		 * @return
+		 */
+		public List<BorrowProgressModel> borrowProgress(ClBorrow borrow,
+				String pageFlag) {
+			List<BorrowProgressModel> list = new ArrayList<BorrowProgressModel>();
+			Map<String, Object> bpMap = new HashMap<String, Object>();
+			bpMap.put("borrowId", borrow.getId());
+			List<BorrowProgressModel> pgList;
+			//int day = getAgainBorrowDays(borrow.getUserId());
+            int day = 30;
+			// 待审核
+			if (ClBorrowModel.STATE_PRE.equals(borrow.getState())) {
+				bpMap.put("state", borrow.getState());
+				pgList = clBorrowProgressMapper.listProgress(bpMap);
+				Calendar cal = Calendar.getInstance(); 
+				cal.setTime(pgList.get(0).getCreateTime());
+				cal.add(Calendar.SECOND, +1);
+				BorrowProgressModel progress = new BorrowProgressModel();
+				progress.setUserId(borrow.getUserId());
+				progress.setBorrowId(borrow.getId());
+				progress.setRemark("已进入风控审核状态，请耐心等待。");
+				progress.setStr("审核中");
+				progress.setState(progress.getStr());
+				progress.setType("10");
+				progress.setCreateTime(cal.getTime());
+				list.add(progress);
+
+				progress = pgList.get(0);
+				progress.setStr(progress.getState());
+				progress.setState(progress.getState());
+				progress.setType("10");
+				list.add(progress);
+			}
+
+			// 审核不通过 （自动审核不通过，人工复审不通过）借款记录
+			if ("detail".equals(pageFlag)
+					&& (ClBorrowModel.STATE_REFUSED.equals(borrow.getState()))) {
+				bpMap.put("state", borrow.getState());
+				pgList = clBorrowProgressMapper.listProgress(bpMap);
+				
+				int size = pgList.size();
+				BorrowProgressModel progress = pgList.get(size - 1);
+				progress.setStr(progress.getState());
+				progress.setState(progress.getState());
+				progress.setType("20");
+				if (day>0) {
+					progress.setRemark(progress.getRemark()+"，请等待"+day+"天后可再次申请借款");
+				}else if(ClBorrowModel.STATE_REFUSED.equals(borrow.getState())){
+					progress.setRemark("很遗憾，您未通过审核");
+				}
+				list.add(progress);
+
+				progress = pgList.get(0);
+				progress.setStr(progress.getState());
+				progress.setState(progress.getState());
+				progress.setType("10");
+				
+				
+				list.add(progress);
+			}
+			
+		
+
+			// 打款中（放款失败）
+			if (ClBorrowModel.STATE_REPAY_FAIL.equals(borrow.getState())
+					|| ClBorrowModel.STATE_REPAY_FAIL.equals(borrow.getState())
+					|| ClBorrowModel.STATE_PASS.equals(borrow.getState())) {
+				bpMap.put("state", borrow.getState());
+				pgList = clBorrowProgressMapper.listProgress(bpMap);
+				boolean passFlag = true;
+				for (int i = pgList.size() - 1; i >= 0; i--) {
+					BorrowProgressModel progress = pgList.get(i);
+					progress.setType("10");
+					if (i == 0) {
+						progress.setStr(progress.getState());
+						progress.setState(progress.getState());
+						list.add(progress);
+					}
+
+					if (passFlag
+							&& ( BorrowProgressModel.PROGRESS_PERSON_PASS.equals(progress.getState()))) {
+						
+						Calendar cal = Calendar.getInstance();
+						cal.setTime(progress.getCreateTime());
+						cal.add(Calendar.SECOND, +1);
+						BorrowProgressModel progress2 = new BorrowProgressModel();
+						progress2.setUserId(Long.valueOf(borrow.getUserId()));
+						progress2.setBorrowId(borrow.getId());
+						progress2.setStr("打款中");
+						progress2.setState("打款中");
+						progress2.setMsg("打款中，请查看您的提现银行卡");
+						progress2.setRemark("打款中，请查看您的提现银行卡");
+						progress2.setType("10");
+						progress2.setCreateTime(cal.getTime());
+						list.add(progress2);
+						
+						progress.setStr(progress.getState());
+						progress.setState(progress.getState());
+						list.add(progress);
+						
+					}
+
+//					if (BorrowProgressModel.PROGRESS_LOAN_FAIL.equals(progress
+//							.getState())) {
+//						progress.setMsg("打款中，请查看您的提现银行卡。");
+//						
+//						Map<String, Object> params = new HashMap<String, Object>();
+//						params.put("borroId", progress.getBorrowId());
+//						params.put("type", PayLogModel.TYPE_PAYMENT);
+//						params.put("scenes", PayLogModel.SCENES_LOANS);
+//						PayLog payLog = payLogMapper.findLatestOne(params);
+//						if(payLog != null){
+//							String changeBankCardCode = Global.getValue("lianlian_change_bank_card_code");
+//							String changeBankCardRemark = Global.getValue("lianlian_change_bank_card_remark");
+//							String payLogCode = payLog.getCode();
+//							String payLogRemark = payLog.getRemark();
+//							if(StringUtil.isNotBlank(payLogCode) 
+//									&& StringUtil.isNotBlank(changeBankCardCode)
+//									&& changeBankCardCode.contains(payLogCode)){
+//								logger.warn("userId:" + progress.getUserId() + "， payLogCode:"+ payLogCode +" ，因银行卡原因打款失败，需要更换银行卡");
+//								progress.setMsg("因银行卡原因打款失败，请更换您的银行卡");
+//							}else if (StringUtil.isNotBlank(payLogRemark) 
+//									&& StringUtil.isNotBlank(changeBankCardRemark)
+//									&& payLogRemark.contains(changeBankCardRemark)){
+//								logger.warn("userId:" + progress.getUserId() + "， payLogRemark:"+ payLogRemark +" ，因银行卡原因打款失败，需要更换银行卡");
+//								progress.setMsg("因银行卡原因打款失败，请更换您的银行卡");
+//							}
+//						}
+//						
+//						progress.setStr(progress.getState());
+//						progress.setState(progress.getStr());
+//						list.add(progress);
+//					}
+				}
+			}
+
+			// 待还款（放款成功）
+			if (ClBorrowModel.STATE_REPAY.equals(borrow.getState())) {
+				bpMap.put("state", borrow.getState());
+				pgList = clBorrowProgressMapper.listProgress(bpMap);
+				boolean passFlag = true;
+				for (int i = pgList.size() - 1; i >= 0; i--) {
+					BorrowProgressModel progress = pgList.get(i);
+					progress.setType("10");
+					if (i == 0) {
+						progress.setStr(progress.getState());
+						progress.setState(progress.getState());
+						list.add(progress);
+					}
+
+					if (passFlag && (BorrowProgressModel.PROGRESS_PERSON_PASS
+									.equals(progress.getState()))) {
+						progress.setStr(progress.getState());
+						progress.setState(progress.getState());
+						list.add(progress);
+						passFlag = false;
+					}
+
+					if (BorrowProgressModel.PROGRESS_LOAN_SUCCESS.equals(progress.getState())) {
+							double repayAmount = borrow.getRealAmount() + borrow.getInterest();
+
+							Calendar cal = Calendar.getInstance();
+							cal.setTime(progress.getCreateTime());
+							cal.add(Calendar.SECOND, +1);
+							progress = new BorrowProgressModel();
+							progress.setUserId(Long.valueOf(borrow.getUserId()));
+							progress.setBorrowId(borrow.getId());
+							progress.setStr("待还款");
+							progress.setRemark("您需要在" + borrow.getTimeLimit() + "天后还款" + repayAmount + "元");
+							Map<String,Object> paramMap = new HashMap<>();
+							paramMap.put("borrowId", borrow.getId());
+							ClBorrowRepay repay = clBorrowRepayMapper.findSelective(paramMap);
+							if (repay!=null) {
+								day = DateUtil.daysBetween(new Date(),
+										repay.getRepayTime());
+								if (day > 0) {
+									progress.setRemark("您需要在" + day + "天后还款" + repayAmount + "元");
+								} else if (day == 0) {
+									progress.setRemark("您需要在今天还款" + repayAmount + "元");
+								}
+							}
+
+							if ("1".equals(borrow.getTimeLimit())) {
+								progress.setRemark("您需要在今天还款" + repayAmount+ "元");
+							}
+							progress.setState("待还款");
+							progress.setType("10");
+							progress.setCreateTime(cal.getTime());
+							list.add(progress);
+
+							progress = pgList.get(i);
+							progress.setStr("已打款");
+							progress.setState(progress.getState());
+							list.add(progress);
+//						} else {
+//							double repayAmount = detail.getAmount().add(detail.getDeductPenaltyAmout()).doubleValue();
+//
+//							Calendar cal = Calendar.getInstance();
+//							cal.setTime(progress.getCreateTime());
+//							cal.add(Calendar.SECOND, +1);
+//							progress = new BorrowProgressModel();
+//							progress.setUserId(Long.valueOf(borrow.getUserId()));
+//							progress.setBorrowId(borrow.getId());
+//							progress.setStr("待还款");
+//							progress.setRemark("您需要在" + DateUtil.daysBetween(new Date(), detail.getRepayTime()) + "天后还款" + repayAmount + "元");
+//							Map<String,Object> paramMap = new HashMap<>();
+//							paramMap.put("borrowId", borrow.getId());
+//							day = DateUtil.daysBetween(new Date(),
+//									detail.getRepayTime());
+//							if (day > 0) {
+//								progress.setRemark("您需要在" + day + "天后还款" + repayAmount + "元");
+//							} else if (day == 0) {
+//								progress.setRemark("您需要在今天还款" + repayAmount + "元");
+//							}
+//
+//							if ("1".equals(borrow.getTimeLimit())) {
+//								progress.setRemark("您需要在今天还款" + repayAmount+ "元");
+//							}
+//							progress.setState("待还款");
+//							progress.setType("10");
+//							progress.setCreateTime(cal.getTime());
+//							list.add(progress);
+//
+//							progress = pgList.get(i);
+//							progress.setStr("已打款");
+//							progress.setState(progress.getStr());
+//							list.add(progress);
+//						}
+						
+					}
+				}
+			}
+			
+			
+			// 还款成功
+			if ("detail".equals(pageFlag)
+					&& (ClBorrowModel.STATE_FINISH.equals(borrow.getState()))) {
+				bpMap.put("state", borrow.getState());
+				pgList = clBorrowProgressMapper.listProgress(bpMap);
+				boolean passFlag = true;
+				for (int i = pgList.size() - 1; i >= 0; i--) {
+					BorrowProgressModel progress = pgList.get(i);
+					progress.setType("10");
+					if (i == 0) {
+						progress.setStr(progress.getState());
+						progress.setState(progress.getState());
+						list.add(progress);
+					}
+
+					if (passFlag
+							&& (BorrowProgressModel.PROGRESS_PERSON_PASS
+									.equals(progress.getState()))) {
+						progress.setStr(progress.getState());
+						progress.setState(progress.getState());
+						list.add(progress);
+						passFlag = false;
+					}
+
+					if (BorrowProgressModel.PROGRESS_LOAN_SUCCESS.equals(progress
+							.getState())
+							|| BorrowProgressModel.PROGRESS_REPAY_SUCCESS
+									.equals(progress.getState())) {
+						progress.setStr(progress.getState());
+						progress.setState(progress.getState());
+						list.add(progress);
+					}
+				}
+			}
+
+			// 逾期
+			int signState = Integer.parseInt(ClBorrowModel.STATE_DELAY);
+			if (ClBorrowModel.STATE_DELAY.equals(borrow.getState())
+					|| ClBorrowModel.STATE_BAD.equals(borrow.getState())) {
+				bpMap.put("state", ClBorrowModel.STATE_BAD);
+				pgList = clBorrowProgressMapper.listProgress(bpMap);
+				boolean passFlag = true;
+				boolean overdueFlag = true;
+
+				for (int i = pgList.size() - 1; i >= 0; i--) {
+					BorrowProgressModel progress = pgList.get(i);
+					progress.setType("10");
+					int prState = Integer.parseInt(progress.getState());
+					if (i == 0) {
+						progress.setStr(progress.getState());
+						progress.setState(progress.getState());
+						list.add(progress);
+					}
+
+					if (passFlag
+							&& (BorrowProgressModel.PROGRESS_PERSON_PASS
+									.equals(progress.getState()))) {
+						progress.setStr(progress.getState());
+						progress.setState(progress.getState());
+						list.add(progress);
+						passFlag = false;
+					}
+
+					if (BorrowProgressModel.PROGRESS_LOAN_SUCCESS.equals(progress
+							.getState())) {
+						progress.setStr(progress.getState());
+						progress.setState(progress.getState());
+						list.add(progress);
+					}
+
+					if (overdueFlag && prState >= signState) {
+						progress = pgList.get(pgList.size() - 1);
+						progress.setStr(progress.getState());
+						progress.setState(progress.getState());
+
+						Calendar cal = Calendar.getInstance();
+						cal.setTime(progress.getCreateTime());
+						cal.add(Calendar.SECOND, +1);
+						progress.setRemark("您已逾期,请尽快还款");
+						progress.setState("已逾期");
+						progress.setType("10");
+						progress.setCreateTime(cal.getTime());
+						list.add(progress);
+						overdueFlag = false;
+					}
+				}
+			}
+			return list;
+		}
 }

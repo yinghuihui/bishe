@@ -1,3 +1,9 @@
+
+*{
+	padding:0;
+	margin:0;
+	font-family:"Microsoft YaHei","arial";
+}
 .main{
     width:100%;
     min-weight:1200px;
@@ -19,7 +25,7 @@
     height: 305px;
 }
 .bottom-pic{
-    margin-left: 300px;
+    margin-left: 200px;
 }
  dl dd{
     padding-left:300px;
@@ -139,7 +145,11 @@
 }
 .state_remark{
     font-size: 16px;
+    color: #d92155;
 }
 .return{
     margin-left: 1000px;
+}
+.bpstate{
+    margin-top: 10px;
 }

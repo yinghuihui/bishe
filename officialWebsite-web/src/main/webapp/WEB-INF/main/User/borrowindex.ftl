@@ -138,8 +138,8 @@
            </div>
             <div class = "borrow_progress">
                <form  id="borrowprogress_1" method="post">
-            <dl>
-
+            <dl >
+                 <a href=javascript:void(0) class="return">返回</a>
                 <dd>
                     <span class="title">借款进度</span>       
                 </dd>
@@ -147,20 +147,22 @@
                     <span >借款订单号:&nbsp;</span>
                      <text  id="borderno"  name="borderno">20180716548915</text> 
                 </dd>
-                <div class ="bor_progress">
+                <div id="progressList">
+         <!--    <div class ="bor_progress">
                     <span class="state_remark" >审核未通过</span> 
-                    <p>很遗憾您的信息审核不通过</p>
-                    <p>2018-04-20 16:45</p>   
+                    <p class="bpstate">很遗憾您的信息审核不通过</p>
+                    <p class="bpstate">2018-04-20 16:45</p>   
                 </div>
                  <div class ="bor_progress">
                     <span class="state_remark" >提交申请成功</span> 
-                    <p>申请1000，期限14天，利息14元</p>
-                    <p>2018-04-20 16:45</p>   
+                    <p class="str">申请1000，期限14天，利息14元</p>
+                    <p class="creat_time">2018-04-20 16:45</p>   
                 </div>
                  <div class ="bor_progress">
-                    <span class="state_remark" >提交申请成功</span> 
+                    <span class="state_remark" >提交申请成功</span>
                     <p>申请1000，期限14天，利息14元</p>
                     <p>2018-04-20 16:45</p>   
+                </div> -->
                 </div>
             
             </dl>

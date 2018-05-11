@@ -46,5 +46,18 @@ public interface ClBorrowMapper extends BaseMapper<ClBorrow, Long> {
 	 */
 	
 	int updatePayState(Map<String,Object> paramMap);
+	
+	/**
+	 * 借款部分还款信息
+	 * @param params
+	 * @return
+	 */
+	List<ManageBorrowModel> listBorrowModel(Map<String, Object> params);
+	/**
+	 * 查询最后一条借款订单
+	 * @param params
+	 * @return
+	 */
+	ClBorrow findRepayBorrow(Map<String, Object> params);
 
 }

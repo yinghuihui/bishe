@@ -1,7 +1,11 @@
 package com.rongdu.ow.core.module.service;
 
+import java.util.Map;
+
+import com.github.pagehelper.Page;
 import com.rongdu.ow.core.common.service.BaseService;
 import com.rongdu.ow.core.module.domain.ClBorrowProgress;
+import com.rongdu.ow.core.module.model.ManageBorrowProgressModel;
 
 /**
  * 借款进度表Service
@@ -20,4 +24,14 @@ public interface ClBorrowProgressService extends BaseService<ClBorrowProgress, L
 	 * @return
 	 */
 	public int isNormalBorrowProgress(Long borrowId);
+	
+	/**
+	 * 后台还款进度列表
+	 * @param params
+	 * @param currentPage
+	 * @param pageSize
+	 * @return
+	 */
+	Page<ManageBorrowProgressModel> listModel(Map<String, Object> params,
+			int currentPage, int pageSize);
 }

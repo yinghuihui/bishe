@@ -7,6 +7,7 @@ import java.util.Map;
 import com.github.pagehelper.Page;
 import com.rongdu.ow.core.common.service.BaseService;
 import com.rongdu.ow.core.module.domain.ClBorrow;
+import com.rongdu.ow.core.module.model.BorrowProgressModel;
 import com.rongdu.ow.core.module.model.ManageBorrowModel;
 
 /**
@@ -99,5 +100,30 @@ public interface ClBorrowService extends BaseService<ClBorrow, Long>{
     * @return
     */
    int updateSelective(Map<String,Object> params);
+   /**
+	 * 借款部分还款信息
+	 * @param params
+	 * @param currentPage
+	 * @param pageSize
+	 * @return
+	 */
+	Page<ManageBorrowModel> listBorrowModel(Map<String, Object> params,
+			int currentPage, int pageSize);
+	/**
+	 * 借款详情
+	 * @param borrowId
+	 * @return
+	 */
+	public ManageBorrowModel getModelByBorrowId(long borrowId);
+	/**
+	 * 借款进度web端的展示
+	 * @param borrow
+	 * @param pageFlag
+	 * @return
+	 */
+	
+	public List<BorrowProgressModel> borrowProgress(ClBorrow borrow,
+			String pageFlag);
+
 
 }
