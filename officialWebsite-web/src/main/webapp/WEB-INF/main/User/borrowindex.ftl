@@ -34,7 +34,7 @@
           <div class = "borrow_index">
                <form  id="borrowindex_1" method="post">
             <dl>
-                   
+                 <a href=javascript:void(0) class="returncredit">认证中心</a>
                 <dd>
                     <span>总额度</span>
                     <span  id="total"  name="total" ></span>

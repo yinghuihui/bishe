@@ -50,8 +50,45 @@
             $(".tabs a[data-id=" + getid() + "]").addClass("hover")
             addClick();
             //uploadImg();
+            getauthdata();
         }
     })
+    var getauthdata = function(){
+        $.ajax({
+            url:"/modules/user/credit/creditdata.htm",
+            type: "get",
+            data:"",
+            cache: false,
+            dataType: "json",
+            success: function (result) {
+              if(result.code==200){
+                  result = result.data
+                 //$(".authstate1").append("<li id='1' class='ab-hover'>个人信息&nbsp;&nbsp;<span class ='state'>"+result.authMap.idState+"</span></li><li id='2' >绑银行卡&nbsp;&nbsp;<span class ='state'>"+result.authMap.idState+"</span></li><li id='3' >工作信息&nbsp;&nbsp;<span class ='state'>"+result.authMap.idState+"</span></li>");
+                 //个人信息
+                 $("#state1").html("("+result.authMap.idState+")");
+                 $("#state2").html("("+result.authMap.bankCardState+")");
+                 $("#state3").html("("+result.authMap.workInfoState+")");
+                 $("#front_pic").attr('src',result.personInfoMap.frontImg); 
+                 $("#obverse_pic").attr('src',result.personInfoMap.backImg);
+                 $("#realname").val(result.personInfoMap.realName);
+                 $("#idno").val(result.personInfoMap.idNo);
+                 $(".degree").val(result.personInfoMap.education);
+                 $("#addres").val(result.personInfoMap.liveAddr);
+                 //银行卡信息
+                 $("#cname").val(result.bankCardMap.brealName);
+                 $("#cardPhone").val(result.bankCardMap.phone);
+                 $(".bank_name").val(result.bankCardMap.bank);
+                 $("#carno").val(result.bankCardMap.cardNo);
+                 //工作信息
+                 $("#companyname").val(result.workInfoMap.companyName);
+                 $("#companyphone").val(result.workInfoMap.companyPhone);
+                 $("#companyplace").val(result.workInfoMap.companyAddr);
+              }
+            }
+    
+    
+        })
+    }
     var getid = function () {
         var url = window.location.href;
         var index = url.indexOf("?id=")
@@ -160,7 +197,7 @@ var addClick = function () {
                     },
                     address: {
                         required: "请输入居住地址"
-                    },
+                    }
                 },
                 errorPlacement: function (error, element) {
                     element.parents("dd").find(".msg_tip").html(error);
@@ -173,7 +210,41 @@ var addClick = function () {
                         element.parents("dd").find(".msg_tip").html('');
                     }
                 },
-           
+                submitHandler: function (form, event, validator) {
+                    require.async(['../module/jquery.form.js',"../jquery.md5.js"], function () { 
+                        var isborrow = $("#isborrow").val();
+                        var data = {};
+                        //data.frontPic=$("#front_upload").files[0]
+                       // data.obversePic=$("#obverse_upload").files[0]
+                        var formData =new FormData();
+                        formData.append("frontPic",$("#front_upload")[0].files[0])
+                        formData.append("obversePic",$("#obverse_upload")[0].files[0])
+                        formData.append("name",$("#realname").val())
+                        formData.append("idNo",$("#idno").val())
+                        formData.append("degree",$(".degree option:selected").val())
+                        formData.append("address",$("#addres").val())
+                        console.info(formData);
+                        if(isborrow==0||isborrow=="0"){
+                        $.ajax({
+                            url:"/modules/user/userbaseinfo/save.htm",
+                            type: "post",
+                            contentType: "multipart/form-data",
+                            data:formData,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            dataType: "json",
+                            success: function (result) {
+                              if(result.code==200){
+                                  alert(result.msg)
+                              }
+                            }
+                        })
+                    } else {
+                        alert("存在未完成借款不可修改")
+                    }
+                    })
+                }
             });
 
         })
@@ -201,7 +272,7 @@ var addClick = function () {
                 },
                 messages: {
                     cname: {
-                      required: "请输入真实姓名"
+                        required: "请输入真实姓名"
                     },
                     cardPhone: {
                         required: "请填写绑定手机号",
@@ -226,7 +297,34 @@ var addClick = function () {
                         element.parents("dd").find(".msg_tip").html('');
                     }
                 },
-           
+                submitHandler: function (form, event, validator) {
+                    require.async(['../module/jquery.form.js',"../jquery.md5.js"], function () { 
+                        var cname = $("#cname").val()
+                        var cardPhone = $("#cardPhone").val()
+                        var bankname = $(".bank_name option:selected").val()
+                        var carNo = $("#carno").val()
+                        var data = {"cname":cname,"cardPhone":cardPhone,"bankname":bankname,"carNo":carNo};
+                        //console.info(data)
+                        var isborrow = $("#isborrow").val();
+                        if(isborrow==0||isborrow=="0"){
+                            $.ajax({
+                                url:"/modules/user/bankcard/save.htm",
+                                type: "post",
+                                data:data,
+                                cache: false,
+                                dataType: "json",
+                                success: function (result) {
+                                  if(result.code==200){
+                                      alert(result.msg)
+                                  }
+                                }
+                            })
+                        }else{
+                            alert("存在未完成借款不可修改")
+                        }
+                       
+                    })
+                }
             });
 
         })
@@ -250,14 +348,14 @@ var addClick = function () {
                     },
                 },
                 messages: {
-                       companyName: {
+                    companyName: {
                         required: "请输入公司名称"
                     },
                     companyPhone: {
                         required: "请输入公司电话"
                     },
                      companyPlace: {
-                        required: "请输入公司地点",
+                        required: "请输入公司地点"
                     }
                 },
                 errorPlacement: function (error, element) {
@@ -271,95 +369,124 @@ var addClick = function () {
                         element.parents("dd").find(".msg_tip").html('');
                     }
                 },
-           
+                submitHandler: function (form, event, validator) {
+                    require.async(['../module/jquery.form.js',"../jquery.md5.js"], function () {    
+                        var companyName = $("#companyname").val()
+                        var companyPhone = $("#companyphone").val()
+                        var companyPlace = $("#companyplace").val()
+                        var data = {"companyName":companyName,"companyPhone":companyPhone,"companyPlace":companyPlace};
+                        var isborrow = $("#isborrow").val();
+                        if(isborrow==0||isborrow=="0"){
+                            $.ajax({
+                                url:"/modules/user/workinfo/save.htm",
+                                type: "post",
+                                data:data,
+                                cache: false,
+                                dataType: "json",
+                                success: function (result) {
+                                  if(result.code==200){
+                                      alert(result.msg)
+                                  }
+                                }
+                            })
+                        }else{
+                            alert("存在未完成借款不可修改")
+                        }
+                     
+                    })
+                }
+                
             });
 
         })
     })
 //个人信息的提交按钮
-$("#person_submit").click(function () {
-    var data = {};
-    //data.frontPic=$("#front_upload").files[0]
-   // data.obversePic=$("#obverse_upload").files[0]
-    var formData =new FormData();
-    formData.append("frontPic",$("#front_upload")[0].files[0])
-    formData.append("obversePic",$("#obverse_upload")[0].files[0])
-    formData.append("name",$("#realname").val())
-    formData.append("idNo",$("#idno").val())
-    formData.append("degree",$(".degree option:selected").val())
-    formData.append("address",$("#addres").val())
-    console.info(formData);
-    $.ajax({
-        url:"/modules/user/userbaseinfo/save.htm",
-        type: "post",
-        contentType: "multipart/form-data",
-        data:formData,
-        cache: false,
-        contentType: false,
-        processData: false,
-        dataType: "json",
-        success: function (result) {
-          if(result.code==200){
-              alert(result.msg)
-          }
-        }
+// $("#person_submit").click(function () {
+//     var isborrow = $("#isborrow").val();
+//     var data = {};
+//     //data.frontPic=$("#front_upload").files[0]
+//    // data.obversePic=$("#obverse_upload").files[0]
+//     var formData =new FormData();
+//     formData.append("frontPic",$("#front_upload")[0].files[0])
+//     formData.append("obversePic",$("#obverse_upload")[0].files[0])
+//     formData.append("name",$("#realname").val())
+//     formData.append("idNo",$("#idno").val())
+//     formData.append("degree",$(".degree option:selected").val())
+//     formData.append("address",$("#addres").val())
+//     console.info(formData);
+//     if(isborrow==0||isborrow=="0"){
+//     $.ajax({
+//         url:"/modules/user/userbaseinfo/save.htm",
+//         type: "post",
+//         contentType: "multipart/form-data",
+//         data:formData,
+//         cache: false,
+//         contentType: false,
+//         processData: false,
+//         dataType: "json",
+//         success: function (result) {
+//           if(result.code==200){
+//               alert(result.msg)
+//           }
+//         }
+//     })
+// } else {
+//     alert("存在未完成借款不可修改")
+// }
 
-
-    })
-
-})
-
-//银行卡的提交按钮
-$("#bank_submit").click(function () {
-    var cname = $("#cname").val()
-    var cardPhone = $("#cardPhone").val()
-    var bankname = $(".bank_name option:selected").val()
-    var carNo = $("#carno").val()
-    var data = {"cname":cname,"cardPhone":cardPhone,"bankname":bankname,"carNo":carNo};
-    console.info(data)
-    $.ajax({
-        url:"/modules/user/bankcard/save.htm",
-        type: "post",
-        data:data,
-        cache: false,
-        dataType: "json",
-        success: function (result) {
-          if(result.code==200){
-              alert(result.msg)
-          }
-        }
-
-
-    })
-
-
-})
-
+// })
 
 //银行卡的提交按钮
-$("#work_submit").click(function () {
-    var companyName = $("#companyname").val()
-    var companyPhone = $("#companyphone").val()
-    var companyPlace = $("#companyplace").val()
-    var data = {"companyName":companyName,"companyPhone":companyPhone,"companyPlace":companyPlace};
-    console.info(data)
-    $.ajax({
-        url:"/modules/user/workinfo/save.htm",
-        type: "post",
-        data:data,
-        cache: false,
-        dataType: "json",
-        success: function (result) {
-          if(result.code==200){
-              alert(result.msg)
-          }
-        }
+// $("#bank_submit").click(function () {
+//     var cname = $("#cname").val()
+//     var cardPhone = $("#cardPhone").val()
+//     var bankname = $(".bank_name option:selected").val()
+//     var carNo = $("#carno").val()
+//     var data = {"cname":cname,"cardPhone":cardPhone,"bankname":bankname,"carNo":carNo};
+//     //console.info(data)
+//     $.ajax({
+//         url:"/modules/user/bankcard/save.htm",
+//         type: "post",
+//         data:data,
+//         cache: false,
+//         dataType: "json",
+//         success: function (result) {
+//           if(result.code==200){
+//               alert(result.msg)
+//           }
+//         }
 
 
-    })
+//     })
 
 
-})
+// })
+
+
+//公司信息的提交按钮
+// $("#work_submit").click(function () {
+//     var companyName = $("#companyname").val()
+//     var companyPhone = $("#companyphone").val()
+//     var companyPlace = $("#companyplace").val()
+//     var data = {"companyName":companyName,"companyPhone":companyPhone,"companyPlace":companyPlace};
+//     console.info(data)
+//     $.ajax({
+//         url:"/modules/user/workinfo/save.htm",
+//         type: "post",
+//         data:data,
+//         cache: false,
+//         dataType: "json",
+//         success: function (result) {
+//           if(result.code==200){
+//               alert(result.msg)
+//           }
+//         }
+
+
+//     })
+
+
+// })
    
 
 

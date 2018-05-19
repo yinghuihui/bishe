@@ -32,9 +32,7 @@ import com.rongdu.ow.constant.SystemConstant;
 
 /**
  * 用户action
- * @version 1.0
- * @author 吴国成
- * @created 2014年9月23日 下午1:53:06
+
  */
 @Scope("prototype")
 @Controller

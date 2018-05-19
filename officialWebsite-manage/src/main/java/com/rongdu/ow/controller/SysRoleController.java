@@ -31,9 +31,7 @@ import tool.util.StringUtil;
 
 /**
  * 角色Action
- * @version 1.0
- * @author 吴国成
- * @created 2014年9月23日 下午1:45:50
+
  */
 @Scope("prototype")
 @Controller

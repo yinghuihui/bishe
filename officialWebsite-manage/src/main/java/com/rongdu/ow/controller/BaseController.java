@@ -57,9 +57,7 @@ import tool.util.StringUtil;
 /**
  * 
  * 基类action
- * @version 1.0
- * @author 吴国成
- * @created 2014年9月23日 下午1:48:28
+
  */
 @Controller
 @Scope("prototype")

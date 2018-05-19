@@ -27,7 +27,7 @@
     <div class="main">
         <div class="register_main">
         <input type="hidden" id="subflag" value=${registerIp}/>
-        <input type="hidden" id="submit" value="${registerIp}/modules/user/pcRegister.htm"/>
+        <input type="hidden" id="submit" value="/modules/user/pcRegister.htm"/>
         <div class="zhuce_1">
             <form  id="zhuce_1" method="post" >
             <dl>
@@ -55,14 +55,14 @@
                     <span>图形验证码</span>
                     <div>
                         <input placeholder="请输入验证码" name="validateCode" id="validateCode"  type="text">
-                        <img id="yanzheng" src="${registerIp}/modules/imgCode/generate.htm" class="valicode_img" alt=""
-                                            class="valicode_img" onclick="this.src='${registerIp}/modules/imgCode/generate.htm?t=' + Math.random();"
+                        <img id="yanzheng" src="/modules/imgCode/generate.htm" class="valicode_img" alt=""
+                                            class="valicode_img" onclick="this.src='/modules/imgCode/generate.htm?t=' + Math.random();"
                                             align="absmiddle" />
                     </div>
                     <p class="msg_tip">
                     </p>
                 </dd>
-                <dd class="yanzheng">
+               <dd class="yanzheng">
                     <span>手机验证码</span>
                     <div>
                     <input placeholder="请输入手机验证码" name="code" id="code" type="text">

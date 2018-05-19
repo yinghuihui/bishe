@@ -1,6 +1,8 @@
 package com.rongdu.ow.core.module.service;
 
 
+import java.util.Map;
+
 import com.rongdu.ow.core.common.service.BaseService;
 import com.rongdu.ow.core.module.domain.ClUserBaseInfo;
 import com.rongdu.ow.core.module.model.ManagerUserModel;
@@ -32,4 +34,11 @@ public interface ClUserBaseInfoService extends BaseService<ClUserBaseInfo, Long>
      * @return
      */
     public ManagerUserModel getBaseModelByUserId(Long userId);
+    
+    /**
+     * 根据userId查询 用户三项认证信息和状态
+     * @param userId
+     * @return
+     */
+    public Map<String,Object> getAuthForCredit(Long userId);
 }

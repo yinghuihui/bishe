@@ -5,9 +5,6 @@ import java.io.Serializable;
 /**
  * 数据字典表
  * 
- * @author lhm
- * @version 1.0
- * @since 2014-03-21
  */
 public class SysDict implements Serializable {
 	/**

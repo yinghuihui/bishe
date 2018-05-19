@@ -42,8 +42,8 @@ public class LoginController extends BaseController{
 		super.generateImgCode();
 	}
 	
-//	@RequestMapping(value = "/api/user/pcSendSms.htm", method = RequestMethod.POST)
-//	public void pcSendSms() throws IOException {	
+	@RequestMapping(value = "/modules/user/pcSendSms.htm", method = RequestMethod.POST)
+	public void pcSendSms() throws IOException {	
 //		String serverHost = Global.getValue("pc_server_host");
 //		String originHeader=request.getHeader("Origin");
 //		if (serverHost.contains(originHeader)){
@@ -52,41 +52,53 @@ public class LoginController extends BaseController{
 //			response.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
 //			response.setHeader("Access-Control-Allow-Headers", "DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type");
 //		}
-//		String code = request.getParameter("code");
-//		String phone = request.getParameter("phone");
-//		String type = request.getParameter("type");
-//		long countDown = 0;
-//		HttpSession session = request.getSession();
-//		String sessionCode = (String) session.getAttribute("code");
-//		Map<String, Object> resultMap = new HashMap<String, Object>();
-//		String result = "10";
-//		if (StringUtil.isNotBlank(code) && code.length() == 4 && code.equals(sessionCode)) {
+		String code = request.getParameter("code");
+		String phone = request.getParameter("phone");
+		String type = request.getParameter("type");
+		long countDown = 0;
+		HttpSession session = request.getSession();
+		String sessionCode = (String) session.getAttribute("code");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String result = "10";
+		if (StringUtil.isNotBlank(code) && code.length() == 4 && code.equals(sessionCode)) {
 //			result = this.check(phone, type);
-//			if (result == null) { if (type.equals("register")) { countDown =
-//					clSmsService.findTimeDifference(phone, type); if (countDown != 0)
-//					{ result = "获取短信验证码过于频繁，请稍后再试"; } else { long msg =
-//					clSmsService.sendSms(phone, type); if (msg == 1) { result = "10";
-//					} else { result = "短信发送失败"; } }
-//
-//			} else { result = "短信类型错误"; } } resultMap.put("countDown",
-//					countDown);
-//
-//			// 验证完成,删除session中图片验证码
-//			session.removeAttribute("code");
-//			if (result.equals("10")) {
-//				resultMap.put(Constant.RESPONSE_CODE,
-//						Constant.SUCCEED_CODE_VALUE);
-//				resultMap.put(Constant.RESPONSE_CODE_MSG, "短信发送成功");
-//			} else {
-//				resultMap.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
-//				resultMap.put(Constant.RESPONSE_CODE_MSG, result);
-//			}
-//		} else {
-//			resultMap.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
-//			resultMap.put(Constant.RESPONSE_CODE_MSG, "图片验证码错误");
-//		}
-//		ServletUtils.writeToResponse(response, resultMap);
-//	}
+//			if (result == null) {
+				if (type.equals("register")) {
+					//countDown = clSmsService.findTimeDifference(phone, type);
+					if (countDown != 0) {
+						result = "获取短信验证码过于频繁，请稍后再试";
+					} else {
+						//long msg = clSmsService.sendSms(phone, type);
+						long msg = 1;
+						if (msg == 1) {
+							result = "10";
+						} else {
+							result = "短信发送失败";
+						}
+					}
+
+				} else {
+					result = "短信类型错误";
+				}
+			
+			resultMap.put("countDown",countDown);
+
+			// 验证完成,删除session中图片验证码
+			session.removeAttribute("code");
+			if (result.equals("10")) {
+				resultMap.put(Constant.RESPONSE_CODE,
+						Constant.SUCCEED_CODE_VALUE);
+				resultMap.put(Constant.RESPONSE_CODE_MSG, "短信发送成功");
+			} else {
+				resultMap.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
+				resultMap.put(Constant.RESPONSE_CODE_MSG, result);
+			}
+		} else {
+			resultMap.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
+			resultMap.put(Constant.RESPONSE_CODE_MSG, "图片验证码错误");
+		}
+		ServletUtils.writeToResponse(response, resultMap);
+	}
 
 	/**
 	 * PC注册

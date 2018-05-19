@@ -209,7 +209,7 @@ public class ClUserServiceImpl extends BaseServiceImpl<ClUser, Long> implements 
 			  Map<String,Object> params = new HashMap<>();
 			  params.put("userId", clUserBaseInfo.getUserId());
 			  ClBorrow clBorrow = clBorrowMapper.findRepayBorrow(params);
-			  if(clBorrow!= null && clBorrow.getState().equals(ClBorrowModel.STATE_FINISH)){
+			  if(clBorrow!= null && !clBorrow.getState().equals(ClBorrowModel.STATE_FINISH)){
 				  request.getSession().setAttribute("isborrow", 1);
 			  }else {
 				  request.getSession().setAttribute("isborrow", 0);

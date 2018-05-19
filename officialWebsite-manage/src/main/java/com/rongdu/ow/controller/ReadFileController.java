@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * 附件读取
  * 
- * @version 1.0
- * @author RDuser
- * @since 2017-02-15
  */
 @Controller
 @Scope("prototype")

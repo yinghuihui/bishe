@@ -5,9 +5,6 @@ import java.io.Serializable;
 /**
  * 
  * 角色和菜单关联表
- * @version 1.0
- * @author 吴国成
- * @created 2014年9月22日 下午4:41:05
  */
 public class SysRoleMenu implements Serializable {
 	/**

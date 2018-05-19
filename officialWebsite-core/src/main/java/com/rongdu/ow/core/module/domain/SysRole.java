@@ -7,9 +7,6 @@ import java.util.List;
 /**
  * 
  * 角色表
- * @version 1.0
- * @author 吴国成
- * @created 2014年9月22日 下午4:41:32
  */
 public class SysRole implements Serializable {
 	/**

@@ -26,20 +26,21 @@
     <!--头部-->
     <#include "/CommonComponent/top.ftl">
    <div class="main">
+   <input type="hidden" id="isborrow" value=${Session.isborrow}>
        <div class="credit_main">
-           <ul>
-             <li id="1" class="ab-hover">个人信息&nbsp;&nbsp;<span class ="state">(认证中)</span></li>
-             <li id="2" ">绑银行卡&nbsp;&nbsp;<span class ="state">(认证中)</span></li>
-             <li id="3" ">工作信息&nbsp;&nbsp;<span class ="state">(认证中)</span></li>
+           <ul class="authstate1">
+             <li id="1" class="ab-hover">个人信息&nbsp;&nbsp;<span class ="state" id="state1">(未认证)</span></li>
+             <li id="2" >绑银行卡&nbsp;&nbsp;<span class ="state" id="state2">(未认证)</span></li>
+             <li id="3" >工作信息&nbsp;&nbsp;<span class ="state" id="state3">(未认证)</span></li> 
            </ul>
            <div class = "person_inform">
                <form  id="person_1">
-            <dl>
+            <dl id=person_dl>
                <dd class = "id_no_pic">
                 <span>身份证正反面</span>
-                    <img id="front_pic" src="/resources/img/home/business-bg.png" >
+                    <img id="front_pic" src="/resources/img/home/zhen.png" >
                     <input id="front_upload" name="frontFile" accept="image" type="file" style="display: none"/>
-                    <img id="obverse_pic" src="/resources/img/home/business-bg.png" >
+                    <img id="obverse_pic" src="/resources/img/home/fan.png" >
                     <input id="obverse_upload" name="obverseFile" accept="image" type="file" style="display: none"/>
                     <p class="msg_tip">
                     </p>
@@ -78,7 +79,7 @@
                 </dd>
                 
                
-                <dd style="height:50px;line-height:50px;margin-bottom:3px;"><input type="button" id="person_submit" class="enter" value="保存认证"></dd>
+                <dd style="height:50px;line-height:50px;margin-bottom:3px;"><input type="submit" id="person_submit" class="enter" value="保存认证"></dd>
             </dl>
             </form>
            </div>
@@ -88,7 +89,7 @@
                 
                 <dd>
                     <span>持卡人</span>
-                    <input placeholder="输入持卡人姓名" id="cname"  name="cname" type="text">
+                    <input placeholder="输入持卡人姓名" id="cname"  name="cname" disabled="disabled" type="text">
                     <p class="msg_tip">
                     </p>
                 </dd>
@@ -116,7 +117,7 @@
                 </dd>
                 
                
-                <dd style="height:50px;line-height:50px;margin-bottom:3px;"><input type="button" id="bank_submit" class="enter" value="保存认证"></dd>
+                <dd style="height:50px;line-height:50px;margin-bottom:3px;"><input type="submit" id="bank_submit" class="enter" value="保存认证"></dd>
             </dl>
             </form>
            </div>
@@ -143,7 +144,7 @@
                     </p>
                 </dd>
                
-                <dd style="height:50px;line-height:50px;margin-bottom:3px;"><input type="button" id="work_submit" class="enter" value="保存认证"></dd>
+                <dd style="height:50px;line-height:50px;margin-bottom:3px;"><input type="submit" id="work_submit" class="enter" value="保存认证"></dd>
             </dl>
             </form>
            </div>

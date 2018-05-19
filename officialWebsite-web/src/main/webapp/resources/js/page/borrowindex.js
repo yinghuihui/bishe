@@ -212,6 +212,15 @@
 $(".timelimit").change(function(){
     indexChange();
 });
+$(".returncredit").click(function(){
+    var loginphone1 =  $("#login_phone").val()
+    if(loginphone1==null||loginphone1==undefined||loginphone1==""){
+        window.location.href = "/modules/web/User/register.htm";
+     }else{
+        window.location.href = "/modules/web/User/credit.htm";
+     }
+    
+})
 
 
  });

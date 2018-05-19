@@ -37,10 +37,7 @@ import com.rongdu.ow.core.module.service.SysUserService;
 /**
  * 
  * 登陆处理Action, 实际登陆处理交由Spring Security框架, 该Action的作用仅仅为辅助
- * 
- * @version 1.0
- * @author 吴国成
- * @created 2014年9月23日 下午2:15:42
+
  */
 @Scope("prototype")
 @Controller

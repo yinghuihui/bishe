@@ -38,18 +38,24 @@ public class UserbaseInfoController {
 	
 	
 	@RequestMapping(value = "/modules/user/userbaseinfo/save.htm", method = { RequestMethod.POST })
-		public void save(@RequestParam(value="frontPic",required=true) MultipartFile frontPic,
-				@RequestParam(value="obversePic",required=true) MultipartFile obversePic,
+		public void save(@RequestParam(value="frontPic",required=false) MultipartFile frontPic,
+				@RequestParam(value="obversePic",required=false) MultipartFile obversePic,
 				@RequestParam(value="name",required=true) String name,
 				@RequestParam(value="idNo",required=true) String idNo,
 				@RequestParam(value="degree",required=true) String degree,
 				@RequestParam(value="address",required=true) String address,HttpServletRequest request,
 				HttpServletResponse response){
+		String frontPicPath ="";
+		String obversePicPath = "";
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		long userId = (Long) request.getSession().getAttribute("userId");
 		ClUserBaseInfo baseInfo = new ClUserBaseInfo();
-		String frontPicPath = save(frontPic);
-		String obversePicPath = save(obversePic);
+		if(frontPic!=null){
+			frontPicPath = save(frontPic);
+		}
+		if(obversePic!=null){
+			obversePicPath = save(obversePic);
+		}
 		baseInfo.setFrontImg(frontPicPath);
 		baseInfo.setBackImg(obversePicPath);
 		baseInfo.setUserId(userId);

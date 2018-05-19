@@ -269,9 +269,11 @@ define(function (require, exports, modlue) {
 
     // 获取手机验证码
     $("#getPhoneVcode").click(function () {
+        console.info(111)
         var o = this;
         var mobile = $("#mobilePhone").val();
-        var urlTop = $("#subflag").val() + '/api/user/pcSendSms.htm';
+       // var urlTop = $("#subflag").val() + '/api/user/pcSendSms.htm';
+        var urlTop =  '/modules/user/pcSendSms.htm';
         console.log(urlTop)
         var code = $("#validateCode").val();
         if (!/0?(13|14|15|18|17)[0-9]{9}/.test(mobile)) {

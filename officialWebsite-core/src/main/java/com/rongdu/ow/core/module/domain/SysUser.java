@@ -7,9 +7,6 @@ import java.util.Date;
 /**
  * 
  * 系统用户表
- * @version 1.0
- * @author 吴国成
- * @created 2014年9月22日 下午4:39:52
  */
 public class SysUser implements Serializable {
 	/**

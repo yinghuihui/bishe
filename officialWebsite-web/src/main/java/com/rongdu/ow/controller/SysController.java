@@ -28,14 +28,7 @@ import com.rongdu.ow.core.module.service.SysConfigService;
 import com.rongdu.ow.controller.base.BaseController;
 
 /**
- * API System Controller
- * 
- * @author gc
- * @version 1.0.0
- * @date 2017年4月29日 下午3:47:24
- * Copyright 杭州融都科技股份有限公司 All Rights Reserved
- * 官方网站：www.erongdu.com
- * 未经授权不得进行修改、复制、出售及商业使用
+
  */
 
 @SuppressWarnings("restriction")

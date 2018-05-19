@@ -6,9 +6,6 @@ import java.util.Date;
 /**
  * 
  * 菜单表
- * @version 1.0
- * @author 吴国成
- * @created 2014年9月22日 下午4:42:18
  */
 public class SysMenu implements Serializable {
 

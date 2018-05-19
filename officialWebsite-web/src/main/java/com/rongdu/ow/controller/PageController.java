@@ -12,10 +12,6 @@ import com.rongdu.ow.core.common.context.Global;
 
 /**
  * 
- * @author chenjianwei@erongdu.com
- * @version 1.0.0
- * @date 2017年8月10日 上午10:50:13 Copyright 杭州融都科技股份有限公司 金融创新事业部 此处填写项目英文简称 All
- *       Rights Reserved 官方网站：www.erongdu.com 未经授权不得进行修改、复制、出售及商业使用
  */
 
 @Controller

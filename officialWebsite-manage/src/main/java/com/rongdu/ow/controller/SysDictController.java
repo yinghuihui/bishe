@@ -33,9 +33,7 @@ import tool.util.StringUtil;
  * 
  * 数据字典管理
  * 
- * @version 1.0
- * @author 吴国成
- * @created 2014年9月23日 下午2:13:03
+
  */
 @Scope("prototype")
 @Controller

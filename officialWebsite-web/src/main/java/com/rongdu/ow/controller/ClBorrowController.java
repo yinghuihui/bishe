@@ -45,6 +45,7 @@ public class ClBorrowController extends BaseController{
 		ClBorrow clborrow = new ClBorrow(userId,camount,cborrowuse,ctimelimit,crealamount,ccardId);
 		ClBorrow realBorrow = clBorrowService.saveApply(clborrow);
 		if (realBorrow != null && realBorrow.getId() > 0) {
+			request.getSession().setAttribute("isborrow", 1);
 			result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 			result.put(Constant.RESPONSE_CODE_MSG, "申请成功");
 		} else {

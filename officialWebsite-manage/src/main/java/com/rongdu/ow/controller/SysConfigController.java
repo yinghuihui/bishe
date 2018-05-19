@@ -45,10 +45,7 @@ import com.rongdu.ow.core.module.service.SysDictService;
 import com.rongdu.ow.constant.SystemConstant;
 
 /**
- * User: mcwang 
- * DateTime:2016-08-04 03:26:22 
- * details: 系统参数表,Action请求层 source:
- * 代码生成器
+
  */
 @Scope("prototype")
 @Controller
